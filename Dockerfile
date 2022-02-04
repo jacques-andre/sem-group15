@@ -1,5 +1,6 @@
 FROM openjdk:latest
 # build maven
+CMD ["mvn", "clean"]
 CMD ["mvn","compile"]
 
 # copy build from target 
