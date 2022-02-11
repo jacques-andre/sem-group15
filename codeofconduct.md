@@ -1,0 +1,7 @@
+- All team members are expected to attend lab sessions on Friday.
+- All team members are expected to complete their assigned tasks in time for code reviews.
+- All team members should make sure to commit their work to the repo at a frequent rate to prevent conflicts.
+- If majority of team members believe that a certain team member is not keeping to the specified code of conduct then they will be asked why they are not working and if they continue to not show work, their grade allocation will not be equally split with the rest of the team.
+- The primary method of contacting team members / the entire team is within our Discord server.
+- Github releases should only be created after the entire team has confirmed that they are confident with the quality of the work.
+- Work must be pushed to the develop branch or a feature branch first.
