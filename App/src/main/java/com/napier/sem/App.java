@@ -10,6 +10,13 @@ public class App {
       System.out.println(String.format("Country:%s", country));
     }
     System.out.println(String.format("Total: %s", countryNames.size()));
+
+    List<String> continentNames = Database.continentDescending();
+
+    for(String continent : continentNames){
+      System.out.println(String.format("Continent:%s", continent));
+    }
+    System.out.println(String.format("Total: %s", continentNames.size()));
   }
 }
 

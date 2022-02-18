@@ -72,6 +72,26 @@ public class Database{
     }
     return countriesLargestToSmallest;
   }
+  public static List<String> continentDescending(){
+    Connection con = dbConnect();
+    ArrayList<String> continentList = new ArrayList<String>();
+
+    try {
+      Statement stmt = con.createStatement();
+      ResultSet allContinents;
+       allContinents = stmt.executeQuery("SELECT DISTINCT continent FROM country;");
+
+      while ( allContinents.next() ) {
+        String continentName = allContinents.getString("continent");
+        continentList.add(continentName);
+      }
+      con.close();
+    }
+    catch (Exception e){
+      System.out.println(e.getMessage());
+    }
+    return continentList;
+  }
 
   }
 
