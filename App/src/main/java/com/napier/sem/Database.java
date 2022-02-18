@@ -52,4 +52,26 @@ public class Database{
     }
     return cityNames;
   }
-}
+  public static List<String> largestPopulationToSmallest(){
+    Connection con = dbConnect();
+    ArrayList<String> countriesLargestToSmallest = new ArrayList<String>();
+
+    try {
+      Statement stmt = con.createStatement();
+      ResultSet rs;
+      rs = stmt.executeQuery("SELECT Name FROM country ORDER BY Population DESC;");
+
+      while ( rs.next() ) {
+        String countryName = rs.getString("Name");
+        countriesLargestToSmallest.add(countryName);
+      }
+      con.close();
+    }
+    catch (Exception e){
+      System.out.println(e.getMessage());
+    }
+    return countriesLargestToSmallest;
+  }
+
+  }
+

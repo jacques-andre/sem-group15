@@ -4,11 +4,12 @@ import java.util.*;
 
 public class App {
   public static void main( String[] args ){
-    List<String> cityNames = Database.getCityNames();
+    List<String> countryNames = Database.largestPopulationToSmallest();
 
-    for(String city : cityNames){
-      System.out.println(String.format("City: %s", city));
+    for(String country : countryNames){
+      System.out.println(String.format("Country:%s", country));
     }
-    System.out.println(String.format("Total: %s", cityNames.size()));
+    System.out.println(String.format("Total: %s", countryNames.size()));
   }
 }
+
