@@ -1,0 +1,18 @@
+version: '3.1'
+services:
+  # mysql image, this uses the world.sql file to build a mysql db
+  db:
+    container_name: db
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=world
+    volumes:
+      - ./mysql-db/:/docker-entrypoint-initdb.d # mounting local volume with world.sql to container
+    ports:
+      - "3306:3306"
+  app:
+    container_name: app
+    depends_on:
+      - db
+    build: App/ # refrences our Dockerfile in App/
