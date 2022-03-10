@@ -1,4 +1,4 @@
-# USE CASE: The top N populated countries in the world where N is provided by the user.
+# USE CASE: The top N populated countries in a region where N is provided by the user.
 
 ## CHARACTERISTIC INFORMATION
 
@@ -37,7 +37,7 @@ A request for information is send to the end user.
 ## MAIN SUCCESS SCENARIO
 
 1. User request population information of top N populated countries.
-2. Project manager retrieves the data for the populated countries grouped by region.
+2. Project manager retrieves the data for every country grouped by region.
 3. Project manager sort the data for top N populated countries( N is provided by the user).
 4. Project manager provide report to the end user.
 
