@@ -41,7 +41,7 @@ A request for information is send to the end user.
 3. Project manager sort the data for top N populated countries( N is provided by the user).
 4. Project manager provide report to the end user.
 
-EXTENSIONS
+## EXTENSIONS
 
 None.
 
