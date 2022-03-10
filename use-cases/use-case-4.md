@@ -37,8 +37,8 @@ A request for information is send to the end user.
 ## MAIN SUCCESS SCENARIO
 
 1. User request population information of top N populated countries.
-2. Project manager retrieves the data for the population of the countries.
-3. Project manager sort the data for top N populated countries( where N is provided by the user).
+2. Project manager retrieves the data for every country.
+3. Project manager sort the data for top N populated countries( N is provided by the user).
 4. Project manager provide report to the end user.
 
 EXTENSIONS
