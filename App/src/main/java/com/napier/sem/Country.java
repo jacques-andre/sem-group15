@@ -7,13 +7,14 @@ import java.util.*;
 
 public class Country {
     public String Code;
-    // public String Code2;
     public String Name;
-    public String Continent; // eventually make this link to continent class;
+    public Continent Continent; 
+    public int Population;
+
+    // public String Code2;
     // public String Region;
     // public float SurfaceArea;
     // public int IndepYear;
-    public int Population;
     // public float LifeExpectancy;
     // public float GNP;
     // public float GNPOld;
@@ -22,7 +23,7 @@ public class Country {
     // public String HeadOfState;
     // public String Capital; //link to city class
 
-    public Country(String _code, String _name, String _continent, int _population) {
+    public Country(String _code, String _name, Continent _continent, int _population) {
         this.Code = _code;
         this.Name = _name;
         this.Continent = _continent;
@@ -33,6 +34,10 @@ public class Country {
     public String toString() {
         String out = String.format("Name:%s,Code:%s,Continent:%s,Population:%s", Name, Code, Continent, Population);
         return out;
+    }
+
+    public int getPopulation(){
+      return this.Population;
     }
 
     public static List<Country> getCountries() {
@@ -55,13 +60,14 @@ public class Country {
 
             // itterate through all rows
             while (rs.next()) {
-                // extract string, append to list
                 String countryName = rs.getString("Name");
                 String code = rs.getString("Code");
-                String continent = rs.getString("Continent");
+                String continentName = rs.getString("Continent");
                 int population = rs.getInt("Population");
 
-                Country toAdd = new Country(code, countryName, continent, population);
+                Continent continentToAdd = new Continent(continentName);
+
+                Country toAdd = new Country(code, countryName, continentToAdd, population);
                 countries.add(toAdd);
             }
             // finished, close connection
@@ -73,5 +79,45 @@ public class Country {
 
         // return list
         return countries;
+    }
+    public static List<Country> getCountriesByContinent(Continent continent){
+        // easier to read in docker
+        System.out.println("Called methood: getCountriesByContinent");
+
+        // create an intial connection to db
+        Connection con = Database.dbConnect();
+
+        // this will hold all countries in continent
+        ArrayList<Country> countriesInContinent = new ArrayList<Country>();
+
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs;
+
+            // run sql on db
+            rs = stmt.executeQuery(
+                "SELECT Name,Continent,Code,Population FROM country WHERE Continent='" + continent.Name + "'");
+
+            // itterate through all rows
+            while (rs.next()) {
+                String countryName = rs.getString("Name");
+                String continentName = rs.getString("Continent");
+                String code = rs.getString("Code");
+                int population = rs.getInt("Population");
+
+                Continent newContinent = new Continent(continentName);
+
+                Country toAdd = new Country(code, countryName, newContinent, population);
+                countriesInContinent.add(toAdd);
+            }
+            // finished, close connection
+            con.close();
+        } catch (Exception e) {
+            // unable to connect to db
+            System.out.println(e.getMessage());
+        }
+
+        // return list
+        return countriesInContinent;
     }
 }
