@@ -17,7 +17,6 @@ Check logs of a container: `docker logs NAME`
 To buld run this: `mvn -f pom.xml clean compile assembly:single`
 
 ## Kaban/Sprint Board
-
 Use the kaban and sprint board to manage issues.
 `zube.io`
 
