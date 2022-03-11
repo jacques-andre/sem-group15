@@ -3,14 +3,18 @@ name: Docker Build
 on:
   push:
     branches:
-    - master
-    - release
-    - develop
+      - master
+      - develop
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker compose
-      run: docker-compose up
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build the containers
+        run: docker-compose up -d
+      - name: Check running containers
+        run: docker ps -a
+      - name: View App Logs
+        run: sleep 15; docker logs app
