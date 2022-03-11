@@ -8,3 +8,13 @@
 **Run built image:**
 ``docker run NAME``
 
+## Running docker-compose
+
+Run compose in detached: `docker-compose up -d`
+Check logs of a container: `docker logs NAME`
+
+## Build
+
+## Lazy Docker:
+
+https://github.com/jesseduffield/lazydocker
