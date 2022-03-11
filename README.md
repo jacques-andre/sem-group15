@@ -14,6 +14,8 @@ Run compose in detached: `docker-compose up -d`
 Check logs of a container: `docker logs NAME`
 
 ## Build
+mvn -f pom.xml clean compile assembly:single
+
 
 ## Lazy Docker:
 
