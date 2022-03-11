@@ -4,18 +4,18 @@ on:
   push:
     branches:
     - master
-    - release
     - develop
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
     - name: Build the containers
       run: docker-compose up -d
     - name: Check running containers
       run: docker ps -a
-    - name: App Logs
-      run: sleep 60; docker logs app 
+    - name: View App Logs
+      run: sleep 15; docker logs app 
 
