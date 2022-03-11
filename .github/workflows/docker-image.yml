@@ -17,5 +17,5 @@ jobs:
     - name: Check running containers
       run: docker ps -a
     - name: App Logs
-      run: docker logs app 
+      run: sleep 60; docker logs app 
 
