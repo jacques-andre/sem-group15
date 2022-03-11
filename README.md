@@ -18,5 +18,6 @@ To buld run this: `mvn -f pom.xml clean compile assembly:single`
 
 
 ## Lazy Docker:
+Use this to understand what is happening with the docker containers easier:
 
 https://github.com/jesseduffield/lazydocker
