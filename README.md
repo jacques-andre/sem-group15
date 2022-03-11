@@ -13,6 +13,14 @@
 Run compose in detached: `docker-compose up -d`
 Check logs of a container: `docker logs NAME`
 
+## Build
+To buld run this: `mvn -f pom.xml clean compile assembly:single`
+
+## Kaban/Sprint Board
+Use the kaban and sprint board to manage issues.
+`zube.io`
+
 ## Lazy Docker:
+Use this to understand what is happening with the docker containers easier:
 
 https://github.com/jesseduffield/lazydocker
