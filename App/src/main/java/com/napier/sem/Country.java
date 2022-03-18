@@ -12,6 +12,7 @@ public class Country {
     public int Population;
     public String Region;
 
+
     // public String Code2;
     // public String Region;
     // public float SurfaceArea;
@@ -85,7 +86,6 @@ public class Country {
         ArrayList<Country> countriesInContinent = new ArrayList<Country>();
         List<Country> allCountries = getCountries();
 
-        System.out.println(String.format("Passed:%s", continent));
         for (int i = 0; i < allCountries.size(); i++) {
           if (allCountries.get(i).Continent.equalsIgnoreCase(continent)){
             countriesInContinent.add(allCountries.get(i));
@@ -93,5 +93,21 @@ public class Country {
         }
 
         return countriesInContinent;
+    }
+    public static List<Country> getCountriesByRegion(String region){
+        // easier to read in docker
+        System.out.println("Called methood: getCountriesByRegion");
+
+        // holds output 
+        ArrayList<Country> countriesInRegion = new ArrayList<Country>();
+        List<Country> allCountries = getCountries();
+
+        for (int i = 0; i < allCountries.size(); i++) {
+          if (allCountries.get(i).Region.equalsIgnoreCase(region)){
+            countriesInRegion.add(allCountries.get(i));
+          }
+        }
+
+        return countriesInRegion;
     }
 }
