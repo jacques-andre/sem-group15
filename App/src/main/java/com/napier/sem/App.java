@@ -32,8 +32,7 @@ public class App {
    * "All the countries in a continent organised by largest population to smallest."
   */
   public static void continentOrgnaisedLargestSmallest(){
-    Continent Africa = new Continent("Africa");
-    List<Country> countriesInContinent = Country.getCountriesByContinent(Africa);
+    List<Country> countriesInContinent = Country.getCountriesByContinent("Africa");
 
     // sort
     Collections.sort(countriesInContinent, new Comparator<Country>() {

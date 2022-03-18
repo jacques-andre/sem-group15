@@ -8,8 +8,9 @@ import java.util.*;
 public class Country {
     public String Code;
     public String Name;
-    public Continent Continent; 
+    public String Continent; 
     public int Population;
+    public String Region;
 
     // public String Code2;
     // public String Region;
@@ -23,21 +24,18 @@ public class Country {
     // public String HeadOfState;
     // public String Capital; //link to city class
 
-    public Country(String _code, String _name, Continent _continent, int _population) {
+    public Country(String _code, String _name, String _continent, int _population, String _region) {
         this.Code = _code;
         this.Name = _name;
         this.Continent = _continent;
         this.Population = _population;
+        this.Region = _region;
     }
 
     @Override
     public String toString() {
         String out = String.format("Name:%s,Code:%s,Continent:%s,Population:%s", Name, Code, Continent, Population);
         return out;
-    }
-
-    public int getPopulation(){
-      return this.Population;
     }
 
     public static List<Country> getCountries() {
@@ -56,18 +54,17 @@ public class Country {
 
             // run sql on db
             rs = stmt.executeQuery(
-                    "SELECT Code,Name,Continent,Population FROM country ORDER BY Population DESC;");
+                    "SELECT Code,Name,Continent,Population,Region FROM country ORDER BY Population DESC;");
 
             // itterate through all rows
             while (rs.next()) {
                 String countryName = rs.getString("Name");
                 String code = rs.getString("Code");
                 String continentName = rs.getString("Continent");
+                String regionName = rs.getString("Region");
                 int population = rs.getInt("Population");
 
-                Continent continentToAdd = new Continent(continentName);
-
-                Country toAdd = new Country(code, countryName, continentToAdd, population);
+                Country toAdd = new Country(code, countryName, continentName, population, regionName);
                 countries.add(toAdd);
             }
             // finished, close connection
@@ -80,44 +77,21 @@ public class Country {
         // return list
         return countries;
     }
-    public static List<Country> getCountriesByContinent(Continent continent){
+    public static List<Country> getCountriesByContinent(String continent){
         // easier to read in docker
         System.out.println("Called methood: getCountriesByContinent");
 
-        // create an intial connection to db
-        Connection con = Database.dbConnect();
-
-        // this will hold all countries in continent
+        // holds output 
         ArrayList<Country> countriesInContinent = new ArrayList<Country>();
+        List<Country> allCountries = getCountries();
 
-        try {
-            Statement stmt = con.createStatement();
-            ResultSet rs;
-
-            // run sql on db
-            rs = stmt.executeQuery(
-                "SELECT Name,Continent,Code,Population FROM country WHERE Continent='" + continent.Name + "'");
-
-            // itterate through all rows
-            while (rs.next()) {
-                String countryName = rs.getString("Name");
-                String continentName = rs.getString("Continent");
-                String code = rs.getString("Code");
-                int population = rs.getInt("Population");
-
-                Continent newContinent = new Continent(continentName);
-
-                Country toAdd = new Country(code, countryName, newContinent, population);
-                countriesInContinent.add(toAdd);
-            }
-            // finished, close connection
-            con.close();
-        } catch (Exception e) {
-            // unable to connect to db
-            System.out.println(e.getMessage());
+        System.out.println(String.format("Passed:%s", continent));
+        for (int i = 0; i < allCountries.size(); i++) {
+          if (allCountries.get(i).Continent.equalsIgnoreCase(continent)){
+            countriesInContinent.add(allCountries.get(i));
+          }
         }
 
-        // return list
         return countriesInContinent;
     }
 }
