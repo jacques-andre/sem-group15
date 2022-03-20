@@ -16,7 +16,7 @@ jobs:
     - name: Check running containers
       run: docker ps -a
     - name: Unit test
-      run: cd App/ && mvn test
+      run: cd App/ && mvn -B test
     - name: View App Logs
       run: sleep 15; docker logs app 
 
