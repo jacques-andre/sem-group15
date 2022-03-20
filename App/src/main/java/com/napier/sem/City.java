@@ -44,9 +44,9 @@ public class City {
   /**
    * Goes through every row in city DB table,
    * creates a new City class with row contents,
-   * append to a list to return.
+   * append to a ArrayList to return.
    * 
-   * @return A list of all cities in DB table.
+   * @return ArrayList of all cities in DB table.
    */
   public static ArrayList<City> getCities() {
     // create an initial connection to db
@@ -87,22 +87,30 @@ public class City {
     return allCities;
   }
 
-  public static List<City> getCitiesByCountryCode(String countryCode) {
-    // easier to read in docker
-    System.out.println("Called methood: getCitiesByCountryCode");
+  /**
+   * Returns all cities with countryCode
+   * 
+   * @param countryCode Found in DB, ex: "AFG"
+   * @return ArrayList with cities only in countryCode
+   */
+  public static ArrayList<City> getCitiesByCountryCode(String countryCode) {
+    // Create ArrayList to hold output
+    ArrayList<City> citiesInCode = new ArrayList<City>();
 
-    // holds output
-    List<City> citiesInCode = new ArrayList<City>();
-    List<City> allCities = getCities();
+    // Get every city using getCities()
+    ArrayList<City> allCities = getCities();
 
+    // loop over every city
     for (int i = 0; i < allCities.size(); i++) {
       // current iteration
       City currentCity = allCities.get(i);
+
+      // check if the parameter countryCode matches current iteration
       if (currentCity.CountryCode.equalsIgnoreCase(countryCode)) {
+        // matches! Add to output ArrayList
         citiesInCode.add(currentCity);
       }
     }
-
     return citiesInCode;
   }
 }
