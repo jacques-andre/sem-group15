@@ -3,7 +3,7 @@ FROM maven:latest AS build
 COPY src /app/src
 COPY pom.xml /app
 # need to assemble to package in plugins
-RUN mvn -f /app/pom.xml clean compile assembly:single
+RUN mvn -B -ntp --batch-mode -f /app/pom.xml clean compile assembly:single
 
 # Package stage
 FROM openjdk:latest
