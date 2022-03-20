@@ -16,7 +16,7 @@ jobs:
     - name: Check running containers
       run: docker ps -a
     - name: Unit test
-      run: cd App/ && mvn -B test
+      run: cd App/ && mvn -B -ntp --batch-mode test
     - name: View App Logs
       run: sleep 15; docker logs app 
 
