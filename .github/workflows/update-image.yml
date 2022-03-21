@@ -6,17 +6,28 @@ on:
       - feature/refactor-reports
 
 jobs:
+  unit-test:
+    name: unit-test
+    runs-on: ubuntu-20.04
+    env:
+      DB_HOST: localhost
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build the containers
+        run: docker-compose up -d
+      - name: Unit test
+        run: cd App/ && mvn -ntp test
   build:
     runs-on: ubuntu-latest
+    name: build
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Build the containers
-      run: docker-compose up -d
+      run: docker-compose -f docker-compose-prod.yml up -d
     - name: Check running containers
       run: docker ps -a
-    - name: Unit test
-      run: cd App/ && mvn -B -ntp --batch-mode test
     - name: View App Logs
-      run: sleep 15; docker logs app 
+      run: sleep 30; docker logs app 
 
