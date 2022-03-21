@@ -4,10 +4,12 @@ package com.napier.sem;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/**
+ * Database setups the connection to the mysql DB
+ */
 public class Database {
   // constants
   private static String DB_HOST = System.getenv("DB_HOST"); // get env from docker
-
   private static String DB_URL = String.format("jdbc:mysql://%s:3306/world", DB_HOST);
 
   private static String DB_USERNAME = "root";

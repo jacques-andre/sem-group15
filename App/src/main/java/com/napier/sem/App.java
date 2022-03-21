@@ -12,8 +12,11 @@ public class App {
     allReports.add(countryLargestPopulationToSmallest());
     allReports.add(countryContinentOrgnaisedLargestSmallest());
     allReports.add(countryRegionOrgnaisedLargestSmallest());
+
     allReports.add(topNPopulatedCountriesInWorld(5));
     allReports.add(topNPopulatedContinentCountries(5));
+    allReports.add(topNPopulatedRegionCountries(5));
+
     allReports.add(populationInCitiesAndNot());
 
     for (Report r : allReports) {
@@ -131,6 +134,29 @@ public class App {
       output.add(currentCountry.toString());
     }
     Report report = new Report("topNPopulatedContinentCountries", output);
+    return report;
+  }
+
+  /*
+   * The top N populated countries in a region where N is provided by the user.
+   */
+  public static Report topNPopulatedRegionCountries(int n) {
+    String region = "Eastern Europe";
+    ArrayList<Country> countriesInRegion = Country.getCountriesByRegion(region);
+    ArrayList<String> output = new ArrayList<String>();
+
+    // sort
+    Collections.sort(countriesInRegion, new Comparator<Country>() {
+      public int compare(Country c1, Country c2) {
+        return c2.Population - c1.Population;
+      }
+    });
+
+    for (int i = 0; i < n; i++) {
+      Country currentCountry = countriesInRegion.get(i);
+      output.add(currentCountry.toString());
+    }
+    Report report = new Report("topNPopulatedRegionCountries", output);
     return report;
   }
 

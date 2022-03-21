@@ -36,8 +36,8 @@ public class City {
 
   @Override
   public String toString() {
-    String out = String.format("ID:%d,Name:%s,CountryCode:%s,District:%s,Population:%d", Id, Name, CountryCode,
-        District, Population);
+    String out = String.format("CityName:%s,CountryName:%s,District:%s,Population%d", Name, CountryCode, District,
+        Population);
     return out;
   }
 
