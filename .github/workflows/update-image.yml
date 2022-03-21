@@ -31,7 +31,7 @@ jobs:
       - name: Check codecov
         uses: codecov/codecov-action@v2
         with:
-          directory: ./target/site/jacoco
+          directory: ./App/target/site/jacoco
           verbose: true
   build:
     runs-on: ubuntu-latest
