@@ -11,6 +11,7 @@ public class App {
     countryContinentOrgnaisedLargestSmallest();
     countryRegionOrgnaisedLargestSmallest();
     topNPopulatedCountriesInWorld(5);
+    topNPopulatedContinentCountries(5);
     populationInCitiesAndNot();
   }
 
@@ -88,6 +89,27 @@ public class App {
 
     for (int i = 0; i < n; i++) {
       Country currentCountry = allCountries.get(i);
+      System.out.println(currentCountry);
+    }
+  }
+
+  /*
+   * The top N populated countries in a continent where N is provided by the user.
+   */
+  public static void topNPopulatedContinentCountries(int n) {
+    System.out.println("---topNPopulatedContinentCountries---");
+    String continent = "Asia";
+    ArrayList<Country> countriesInContinent = Country.getCountriesByContinent(continent);
+
+    // sort
+    Collections.sort(countriesInContinent, new Comparator<Country>() {
+      public int compare(Country c1, Country c2) {
+        return c2.Population - c1.Population;
+      }
+    });
+
+    for (int i = 0; i < n; i++) {
+      Country currentCountry = countriesInContinent.get(i);
       System.out.println(currentCountry);
     }
   }
