@@ -17,12 +17,15 @@ public class App {
     allReports.add(topNPopulatedContinentCountries(5));
     allReports.add(topNPopulatedRegionCountries(5));
 
+    allReports.add(citiesLargestPopulationToSmallest());
+
     allReports.add(populationInCitiesAndNot());
 
     for (Report r : allReports) {
       r.outputReport();
       System.out.println("----");
     }
+
   }
 
   /*
@@ -157,6 +160,28 @@ public class App {
       output.add(currentCountry.toString());
     }
     Report report = new Report("topNPopulatedRegionCountries", output);
+    return report;
+  }
+
+  /*
+   * All the cities in the world organised by largest population to smallest.
+   */
+  public static Report citiesLargestPopulationToSmallest() {
+    ArrayList<City> allCities = City.getCities();
+    ArrayList<String> output = new ArrayList<String>();
+
+    // sort
+    Collections.sort(allCities, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
+
+    for (City c : allCities) {
+      output.add(c.toString());
+    }
+
+    Report report = new Report("citiesLargestPopulationToSmallest", output);
     return report;
   }
 
