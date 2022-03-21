@@ -7,20 +7,28 @@ public class App {
     System.out.println(
         String.format("DB_HOST:%s", System.getenv("DB_HOST")));
 
-    countryLargestPopulationToSmallest();
-    countryContinentOrgnaisedLargestSmallest();
-    countryRegionOrgnaisedLargestSmallest();
-    topNPopulatedCountriesInWorld(5);
-    topNPopulatedContinentCountries(5);
-    populationInCitiesAndNot();
+    ArrayList<Report> allReports = new ArrayList<Report>();
+
+    allReports.add(countryLargestPopulationToSmallest());
+    allReports.add(countryContinentOrgnaisedLargestSmallest());
+    allReports.add(countryRegionOrgnaisedLargestSmallest());
+    allReports.add(topNPopulatedCountriesInWorld(5));
+    allReports.add(topNPopulatedContinentCountries(5));
+    allReports.add(populationInCitiesAndNot());
+
+    for (Report r : allReports) {
+      r.outputReport();
+      System.out.println("----");
+    }
   }
 
   /*
    * "All the countries in the world organised by largest population to smallest."
    */
-  public static void countryLargestPopulationToSmallest() {
-    System.out.println("---countryLargestPopulationToSmallest---");
+  public static Report countryLargestPopulationToSmallest() {
     ArrayList<Country> allCountries = Country.getCountries();
+
+    ArrayList<String> output = new ArrayList<String>();
 
     // sort
     Collections.sort(allCountries, new Comparator<Country>() {
@@ -28,17 +36,21 @@ public class App {
         return c2.Population - c1.Population;
       }
     });
+
     for (Country c : allCountries) {
-      System.out.println(c);
+      output.add(c.toString());
     }
+
+    Report report = new Report("countryLargestPopulationToSmallest", output);
+    return report;
   }
 
   /*
    * "All the countries in a continent organised by largest population to smallest."
    */
-  public static void countryContinentOrgnaisedLargestSmallest() {
-    System.out.println("---countryContinentOrgnaisedLargestSmallest---");
+  public static Report countryContinentOrgnaisedLargestSmallest() {
     ArrayList<Country> countriesInContinent = Country.getCountriesByContinent("Africa");
+    ArrayList<String> output = new ArrayList<String>();
 
     // sort
     Collections.sort(countriesInContinent, new Comparator<Country>() {
@@ -48,17 +60,19 @@ public class App {
     });
 
     for (Country c : countriesInContinent) {
-      System.out.println(c);
+      output.add(c.toString());
     }
 
+    Report report = new Report("countryContinentOrgnaisedLargestSmallest", output);
+    return report;
   }
 
   /*
    * "All the countries in a region organised by largest population to smallest."
    */
-  public static void countryRegionOrgnaisedLargestSmallest() {
-    System.out.println("---countryRegionOrgnaisedLargestSmallest---");
+  public static Report countryRegionOrgnaisedLargestSmallest() {
     ArrayList<Country> countriesInRegion = Country.getCountriesByRegion("Caribbean");
+    ArrayList<String> output = new ArrayList<String>();
 
     // sort
     Collections.sort(countriesInRegion, new Comparator<Country>() {
@@ -68,17 +82,19 @@ public class App {
     });
 
     for (Country c : countriesInRegion) {
-      System.out.println(c);
+      output.add(c.toString());
     }
 
+    Report report = new Report("countryRegionOrgnaisedLargestSmallest", output);
+    return report;
   }
 
   /*
    * The top N populated countries in the world where N is provided by the user.
    */
-  public static void topNPopulatedCountriesInWorld(int n) {
-    System.out.println("---topNPopulatedCountriesInWorld---");
+  public static Report topNPopulatedCountriesInWorld(int n) {
     ArrayList<Country> allCountries = Country.getCountries();
+    ArrayList<String> output = new ArrayList<String>();
 
     // sort
     Collections.sort(allCountries, new Comparator<Country>() {
@@ -89,17 +105,19 @@ public class App {
 
     for (int i = 0; i < n; i++) {
       Country currentCountry = allCountries.get(i);
-      System.out.println(currentCountry);
+      output.add(currentCountry.toString());
     }
+    Report report = new Report("topNPopulatedCountriesInWorld", output);
+    return report;
   }
 
   /*
    * The top N populated countries in a continent where N is provided by the user.
    */
-  public static void topNPopulatedContinentCountries(int n) {
-    System.out.println("---topNPopulatedContinentCountries---");
+  public static Report topNPopulatedContinentCountries(int n) {
     String continent = "Asia";
     ArrayList<Country> countriesInContinent = Country.getCountriesByContinent(continent);
+    ArrayList<String> output = new ArrayList<String>();
 
     // sort
     Collections.sort(countriesInContinent, new Comparator<Country>() {
@@ -110,16 +128,18 @@ public class App {
 
     for (int i = 0; i < n; i++) {
       Country currentCountry = countriesInContinent.get(i);
-      System.out.println(currentCountry);
+      output.add(currentCountry.toString());
     }
+    Report report = new Report("topNPopulatedContinentCountries", output);
+    return report;
   }
 
   /*
    * "The population of people, people living in cities, and people not living in cities in each country"
    */
-  public static void populationInCitiesAndNot() {
-    System.out.println("---populationInCitiesAndNot---");
+  public static Report populationInCitiesAndNot() {
     List<Country> allCountries = Country.getCountries();
+    ArrayList<String> output = new ArrayList<String>();
 
     for (Country currentCountry : allCountries) {
       int countryPopulation = currentCountry.Population;
@@ -137,12 +157,13 @@ public class App {
       cityPercentage *= 100;
       outsideCityPercentage *= 100;
 
-      System.out.println(String.format("Country:%s", currentCountry.Name));
-      System.out.println(String.format("Country Population:%d", countryPopulation));
-      System.out.println(String.format("City Population:%d", cityPopulation));
-      System.out.println(String.format("City Percentage:%f%%", cityPercentage));
-      System.out.println(String.format("Outside City:%d", outsideCity));
-      System.out.println(String.format("Outside City Percentage:%f%%", outsideCityPercentage));
+      String outputString = String.format(
+          "Country:%s\nCountry-Population:%d\nCity-Population:%d\nCity-Percentage:%f%%\nOutside-city:%d\noutsideCityPercentage:%f%%\n",
+          currentCountry.Name, countryPopulation, cityPopulation, cityPercentage, outsideCity, outsideCityPercentage);
+
+      output.add(outputString);
     }
+    Report report = new Report("populationInCitiesAndNot", output);
+    return report;
   }
 }
