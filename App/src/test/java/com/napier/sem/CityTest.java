@@ -10,17 +10,38 @@ import static org.junit.Assert.assertEquals;
 public class CityTest {
 
   /**
-   * Test if City.getCities() returns the same number of,
-   * cities as there are in the City table.
+   * Test if City.getCities() matches the same number of,
+   * cities found in mysql
    */
   @Test
   public void testGetCities() {
     System.out.println("Running testGetCities");
-    // This is how many rows are in the city table
+
+    // total rows in the city table
     int expectedLen = 4079;
 
     ArrayList<City> cities = City.getCities();
     int gotLen = cities.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+  }
+
+  /**
+   * Test if City.getCitiesByCountryCode() returns the same number of,
+   * cities with the countryCode found in mysql
+   */
+  @Test
+  public void testGetCitiesByCountryCode() {
+    System.out.println("Runking testGetCitiesByCountryCode");
+
+    String exampleCode = "AUS";
+
+    // rows in the city table with exampleCode
+    int expectedLen = 14;
+
+    ArrayList<City> citiesInCode = City.getCitiesByCountryCode("AUS");
+    int gotLen = citiesInCode.size();
 
     assertEquals(expectedLen, gotLen);
     System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);

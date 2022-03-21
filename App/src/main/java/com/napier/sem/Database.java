@@ -19,7 +19,6 @@ public class Database {
    * @return connection to interact with db
    */
   public static Connection dbConnect() {
-    System.out.println(DB_URL);
     Connection con = null;
     int tries = 0;
 
