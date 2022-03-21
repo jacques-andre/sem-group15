@@ -6,7 +6,10 @@ import java.sql.DriverManager;
 
 public class Database {
   // constants
-  private static String DB_URL = "jdbc:mysql://localhost:3306/world"; // using docker contianer name as host
+  private static String DB_HOST = System.getenv("DB_HOST"); // get env from docker
+
+  private static String DB_URL = String.format("jdbc:mysql://%s:3306/world", DB_HOST);
+
   private static String DB_USERNAME = "root";
   private static String DB_PASSWORD = "password";
 
@@ -16,6 +19,7 @@ public class Database {
    * @return connection to interact with db
    */
   public static Connection dbConnect() {
+    System.out.println(DB_URL);
     Connection con = null;
     int tries = 0;
 

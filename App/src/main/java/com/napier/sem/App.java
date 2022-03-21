@@ -4,11 +4,13 @@ import java.util.*;
 
 public class App {
   public static void main(String[] args) {
+    System.out.println(System.getenv("DB_HOST"));
     // largestPopulationToSmallest();
     // continentOrgnaisedLargestSmallest();
     populationInCitiesAndNot();
 
   }
+
   /*
    * "All the countries in the world organised by largest population to smallest."
    */
@@ -29,10 +31,11 @@ public class App {
       System.out.println(out);
     }
   }
+
   /*
    * "All the countries in a continent organised by largest population to smallest."
    */
-  public static void continentOrgnaisedLargestSmallest(){
+  public static void continentOrgnaisedLargestSmallest() {
     List<Country> countriesInContinent = Country.getCountriesByContinent("Africa");
 
     // sort
@@ -50,13 +53,14 @@ public class App {
       System.out.println(out);
     }
   }
+
   /*
    * "The population of people, people living in cities, and people not living in cities in each country"
    */
-  public static void populationInCitiesAndNot(){
+  public static void populationInCitiesAndNot() {
     List<Country> allCountries = Country.getCountries();
 
-    for(int i = 0; i < allCountries.size(); i++){
+    for (int i = 0; i < allCountries.size(); i++) {
       // current iteration
       Country currentCountry = allCountries.get(i);
 
@@ -69,10 +73,9 @@ public class App {
         cityPopulation += city.Population;
       }
 
-      
       int outsideCity = countryPopulation - cityPopulation;
-      double cityPercentage = (double)cityPopulation / countryPopulation;
-      double outsideCityPercentage = (double)outsideCity / countryPopulation;
+      double cityPercentage = (double) cityPopulation / countryPopulation;
+      double outsideCityPercentage = (double) outsideCity / countryPopulation;
       cityPercentage *= 100;
       outsideCityPercentage *= 100;
 
