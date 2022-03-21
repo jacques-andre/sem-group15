@@ -20,6 +20,7 @@ jobs:
         run: cd App/ && mvn -ntp test
   code-cov:
     name: code-cov
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
