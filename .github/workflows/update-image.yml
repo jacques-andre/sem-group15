@@ -24,8 +24,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Build the containers
+        run: docker-compose up -d
       - name: Generate jacoco site
-        run: cd App && DB_HOST=localhost mvn clean install
+        run: cd App && DB_HOST=localhost mvn -ntp clean install
       - name: Check codecov
         uses: codecov/codecov-action@v2
         with:
