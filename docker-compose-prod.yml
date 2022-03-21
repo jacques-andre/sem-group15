@@ -16,4 +16,4 @@ services:
       - db
     build: App/ # refrences our Dockerfile in App/
     environment:
-      DB_HOST: "localhost"
+      DB_HOST: "db"
