@@ -25,7 +25,7 @@ public class App {
       r.outputReport();
       System.out.println("----");
     }
-
+    Report.toHMTL(allReports);
   }
 
   /*
@@ -209,7 +209,7 @@ public class App {
       outsideCityPercentage *= 100;
 
       String outputString = String.format(
-          "Country:%s\nCountry-Population:%d\nCity-Population:%d\nCity-Percentage:%f%%\nOutside-city:%d\noutsideCityPercentage:%f%%\n",
+          "Country:%s,Country-Population:%d,City-Population:%d,City-Percentage:%f%%,Outside-city:%d,outsideCityPercentage:%f%%",
           currentCountry.Name, countryPopulation, cityPopulation, cityPercentage, outsideCity, outsideCityPercentage);
 
       output.add(outputString);
