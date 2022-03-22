@@ -1,0 +1,4 @@
+rm -rf target
+mvn -f pom.xml clean compile assembly:single;
+DB_HOST=localhost java -jar ./target/seMethods-1.0-jar-with-dependencies.jar
+firefox index.html
