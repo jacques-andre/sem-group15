@@ -21,10 +21,10 @@ public class App {
 
     allReports.add(populationInCitiesAndNot());
 
-    // for (Report r : allReports) {
-    // r.outputReport();
-    // System.out.println("----");
-    // }
+    for (Report r : allReports) {
+      r.outputReport();
+      System.out.println("----");
+    }
     Report.toHMTL(allReports);
   }
 
