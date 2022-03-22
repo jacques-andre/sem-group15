@@ -61,7 +61,7 @@ public class Report {
     ct.setVariable("time", dateStr);
 
     try {
-      Writer writer = new FileWriter("output.html");
+      Writer writer = new FileWriter("index.html");
       writer.write(templateEngine.process("template.html", ct));
       writer.close();
     } catch (Exception e) {
