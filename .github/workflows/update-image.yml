@@ -1,0 +1,49 @@
+name: Unit test, coverage and build containers.
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+
+jobs:
+  unit-test:
+    name: unit-test
+    runs-on: ubuntu-20.04
+    env:
+      DB_HOST: localhost
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build the containers
+        run: docker-compose up -d
+      - name: Unit test
+        run: cd App/ && mvn -ntp test
+  code-cov:
+    name: code-cov
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build the containers
+        run: docker-compose up -d
+      - name: Generate jacoco site
+        run: cd App && DB_HOST=localhost mvn -ntp clean install
+      - name: Check codecov
+        uses: codecov/codecov-action@v2
+        with:
+          directory: ./App/target/site/jacoco
+          verbose: true
+  build:
+    runs-on: ubuntu-latest
+    name: build
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build the containers
+      run: docker-compose -f docker-compose-prod.yml up -d
+    - name: Check running containers
+      run: docker ps -a
+    - name: View App Logs
+      run: sleep 30; docker logs app 
+

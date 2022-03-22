@@ -1,4 +1,5 @@
 ![](https://github.com/jacques-andre/sem-group15/actions/workflows/docker-image.yml/badge.svg)
+[![codecov](https://codecov.io/gh/jacques-andre/sem-group15/branch/master/graph/badge.svg?token=S7XK0I86OQ)](https://codecov.io/gh/jacques-andre/sem-group15)
 
 ## Docker:
 

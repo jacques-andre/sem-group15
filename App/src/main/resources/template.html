@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>SEM Group 15 Reports</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .code-block {
+      background-color: #eff1f3;
+      font-family: sans-serif;
+      font-size: 1rem;
+    }
+    .dark-bg{
+      background-color: #101112;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="m-4">
+    <header>
+      <h1 class="text-3xl">SEM Group 15 Reports</h1>
+      <p>Build Time: [(${time})]</p>
+      <a class="text-sky-600" href="https://github.com/jacques-andre/sem-group15">sem-group15 github</a>
+    </header>
+
+    <section class="py-3">
+      <p class="text-xl">Generated Reports:</p>
+      <!-- Loop over every report title -->
+      <div th:each="report: ${reports}">
+        <div>
+          <a class="text-lg text-sky-600" th:href="${'#'+ report.ReportTitle}">
+            [(${report.ReportTitle})]
+          </a>
+        </div>
+    </section>
+
+
+    <section class="grid grid-cols-2 gap-3">
+      <!--  Loop over every report & output -->
+      <div th:each="report: ${reports}" th:id="${report.ReportTitle}">
+        <div class="">
+          <h2 class="text-2xl my-2">
+            [(${report.ReportTitle})]:
+          </h2>
+          <div class="code-block p-5">
+            <p th:each="s : ${report.QuestionOutput}" class="p-1">
+              [(${s})]
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="flex justify-center dark-bg p-3 text-sky-600">
+    <a href="#">Back to top</a>
+  </div>
+</body>
+
+</html>

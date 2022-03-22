@@ -5,73 +5,128 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
 
+/**
+ * Represents a Country
+ * Data is fetched from country table in DB
+ */
 public class Country {
-    public String Code;
-    // public String Code2;
-    public String Name;
-    public String Continent; // eventually make this link to continent class;
-    // public String Region;
-    // public float SurfaceArea;
-    // public int IndepYear;
-    public int Population;
-    // public float LifeExpectancy;
-    // public float GNP;
-    // public float GNPOld;
-    // public String LocalName;
-    // public String GovermentForm;
-    // public String HeadOfState;
-    // public String Capital; //link to city class
+  public String Code; // Primary key from DB ex: ABW
+  public String Name; // Country name
+  public String Continent;
+  public int Population;
+  public String Region;
 
-    public Country(String _code, String _name, String _continent, int _population) {
-        this.Code = _code;
-        this.Name = _name;
-        this.Continent = _continent;
-        this.Population = _population;
+  /**
+   * Creates a new Country with the given params.
+   * 
+   * @param _code       Primary Key
+   * @param _name       Country name
+   * @param _continent  Continent
+   * @param _population Population
+   * @param _region     Region
+   * @return New Country with params
+   */
+  public Country(String _code, String _name, String _continent, int _population, String _region) {
+    this.Code = _code;
+    this.Name = _name;
+    this.Continent = _continent;
+    this.Population = _population;
+    this.Region = _region;
+  }
+
+  @Override
+  public String toString() {
+    String out = String.format("Name:%s,Code:%s,Continent:%s,Population:%s", Name, Code, Continent, Population);
+    return out;
+  }
+
+  /**
+   * Goes through every row in country DB table,
+   * creates a new Country class with row contents,
+   * append to a ArrayList to return.
+   * 
+   * @return ArrayList of all countries in DB table.
+   */
+  public static ArrayList<Country> getCountries() {
+    // create an intial connection to db
+    Connection con = Database.dbConnect();
+
+    // this will hold all countries
+    ArrayList<Country> countries = new ArrayList<Country>();
+
+    try {
+      Statement sqlStatement = con.createStatement();
+      ResultSet sqlReturn;
+
+      // run sql on db
+      sqlReturn = sqlStatement.executeQuery(
+          "SELECT Code,Name,Continent,Population,Region FROM country;");
+
+      // itterate through all rows
+      while (sqlReturn.next()) {
+        String countryName = sqlReturn.getString("Name");
+        String code = sqlReturn.getString("Code");
+        String continentName = sqlReturn.getString("Continent");
+        String regionName = sqlReturn.getString("Region");
+        int population = sqlReturn.getInt("Population");
+
+        // create new country with these vars
+        Country toAdd = new Country(code, countryName, continentName, population, regionName);
+        // append to output list
+        countries.add(toAdd);
+      }
+      // finished, close connection
+      con.close();
+    } catch (Exception e) {
+      // unable to connect to db
+      System.out.println(e.getMessage());
     }
 
-    @Override
-    public String toString() {
-        String out = String.format("Name:%s,Code:%s,Continent:%s,Population:%s", Name, Code, Continent, Population);
-        return out;
+    // return list
+    return countries;
+  }
+
+  /**
+   * Returns all countries in param continent
+   * 
+   * @param continent String value of continent ex: "Asia"
+   * @return ArrayList of all countries in continent
+   */
+  public static ArrayList<Country> getCountriesByContinent(String continent) {
+    // get all countries
+    ArrayList<Country> allCountries = getCountries();
+    // holds output
+    ArrayList<Country> countriesInContinent = new ArrayList<Country>();
+
+    // go through all countries, check if current Continent matches param
+    for (Country currentCountry : allCountries) {
+      if (currentCountry.Continent.equalsIgnoreCase(continent)) {
+        countriesInContinent.add(currentCountry);
+      }
     }
 
-    public static List<Country> getCountries() {
-        // easier to read in docker
-        System.out.println("Called methood: getCountries");
+    return countriesInContinent;
+  }
 
-        // create an intial connection to db
-        Connection con = Database.dbConnect();
+  /**
+   * Returns all countries in param region
+   * 
+   * @param region String value of region ex: "Caribbean"
+   * @return ArrayList of all countries in region
+   */
+  public static ArrayList<Country> getCountriesByRegion(String region) {
+    // get all countries
+    ArrayList<Country> allCountries = getCountries();
+    // holds output
+    ArrayList<Country> countriesInRegion = new ArrayList<Country>();
 
-        // this will hold all countries
-        ArrayList<Country> countries = new ArrayList<Country>();
-
-        try {
-            Statement stmt = con.createStatement();
-            ResultSet rs;
-
-            // run sql on db
-            rs = stmt.executeQuery(
-                    "SELECT Code,Name,Continent,Population FROM country ORDER BY Population DESC;");
-
-            // itterate through all rows
-            while (rs.next()) {
-                // extract string, append to list
-                String countryName = rs.getString("Name");
-                String code = rs.getString("Code");
-                String continent = rs.getString("Continent");
-                int population = rs.getInt("Population");
-
-                Country toAdd = new Country(code, countryName, continent, population);
-                countries.add(toAdd);
-            }
-            // finished, close connection
-            con.close();
-        } catch (Exception e) {
-            // unable to connect to db
-            System.out.println(e.getMessage());
-        }
-
-        // return list
-        return countries;
+    // go through all countries, check if current Region matches param
+    for (Country currentCountry : allCountries) {
+      if (currentCountry.Region.equalsIgnoreCase(region)) {
+        countriesInRegion.add(currentCountry);
+      }
     }
+
+    return countriesInRegion;
+  }
 }
