@@ -3,7 +3,7 @@ name: Upload to github pages
 on:
   push:
     branches:
-      - feature/html-reports
+      - release
 
 jobs:
   deploy:

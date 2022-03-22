@@ -1,9 +1,10 @@
-name: Docker Build Update
+name: Unit test, coverage and build containers.
 
 on:
   push:
     branches:
-      - feature/refactor-reports
+      - master
+      - develop
 
 jobs:
   unit-test:
