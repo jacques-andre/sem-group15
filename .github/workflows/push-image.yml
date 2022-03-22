@@ -21,9 +21,7 @@ jobs:
     - name: Run jar
       run: cd App && DB_HOST=localhost java -jar ./target/seMethods-1.0-jar-with-dependencies.jar
     - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./App
-
-
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./App
