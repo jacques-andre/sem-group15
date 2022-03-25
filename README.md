@@ -33,4 +33,4 @@ https://github.com/jesseduffield/lazydocker
 ## Lazygit:
 Similar to lazy docker but makes the repo easier to understand
 
-https://github.com/jesseduffield/lazlazygitydocker
+https://github.com/jesseduffield/lazygit
