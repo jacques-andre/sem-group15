@@ -21,6 +21,8 @@ public class App {
 
     allReports.add(populationInCitiesAndNot());
 
+    allReports.add(topNPopulatedCitiesInNContinent(5));
+
     for (Report r : allReports) {
       r.outputReport();
       System.out.println("----");
@@ -221,27 +223,34 @@ public class App {
   /*
    * "The top N populated cities in a continent where N is provided by the user."
    */
-  public static Report topNPopulatedCitiesInNContinent() {
-    String selectedContinent = "Africa";
-    Int numberOfOutputs = 3;
+  public static Report topNPopulatedCitiesInNContinent(int n) {
+    String selectedContinent = "Asia";
 
+    ArrayList<Country> countriesInContinent = Country.getCountriesByContinent(selectedContinent);
+    ArrayList<City> allCitiesInSelectedContinent = new ArrayList<City>();
 
+    ArrayList<String> output = new ArrayList<String>();
 
-//    ArrayList<Country> countriesInRegion = Country.getCountriesByRegion(region);
-//    ArrayList<String> output = new ArrayList<String>();
-//
-//    // sort
-//    Collections.sort(countriesInRegion, new Comparator<Country>() {
-//      public int compare(Country c1, Country c2) {
-//        return c2.Population - c1.Population;
-//      }
-//    });
-//
-//    for (int i = 0; i < n; i++) {
-//      Country currentCountry = countriesInRegion.get(i);
-//      output.add(currentCountry.toString());
-//    }
-//    Report report = new Report("topNPopulatedRegionCountries", output);
-//    return report;
+    // loops over every country in selectedContinent
+    for (int i = 0; i < countriesInContinent.size(); i++) {
+      // current iteration
+      Country currentCountry = countriesInContinent.get(i);
+      ArrayList<City> currentCities = City.getCitiesByCountryCode(currentCountry.Code);
+      allCitiesInSelectedContinent.addAll(currentCities);
+    }
+
+    // sort
+    Collections.sort(allCitiesInSelectedContinent, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
+
+    for (int i = 0; i < n; i++) {
+      output.add(allCitiesInSelectedContinent.get(i).toString());
+    }
+
+    Report report = new Report("topNPopulatedCitiesInNContinent", output);
+    return report;
   }
 }
