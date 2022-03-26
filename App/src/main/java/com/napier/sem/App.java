@@ -235,6 +235,7 @@ public class App {
     for (int i = 0; i < countriesInContinent.size(); i++) {
       // current iteration
       Country currentCountry = countriesInContinent.get(i);
+
       ArrayList<City> currentCities = City.getCitiesByCountryCode(currentCountry.Code);
       allCitiesInSelectedContinent.addAll(currentCities);
     }
@@ -246,6 +247,7 @@ public class App {
       }
     });
 
+    // print first n cities
     for (int i = 0; i < n; i++) {
       output.add(allCitiesInSelectedContinent.get(i).toString());
     }
