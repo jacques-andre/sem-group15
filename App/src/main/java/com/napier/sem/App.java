@@ -22,6 +22,7 @@ public class App {
     allReports.add(populationInCitiesAndNot());
 
     allReports.add(topNPopulatedCitiesInNContinent(5));
+    allReports.add(topNPopulatedCitiesInNRegion(5));
 
     for (Report r : allReports) {
       r.outputReport();
@@ -231,7 +232,8 @@ public class App {
 
     ArrayList<String> output = new ArrayList<String>();
 
-    // loops over every country in selectedContinent
+    // loops over every country in selectedContinent to aggregate
+    // allCitiesInSelectedContinent
     for (int i = 0; i < countriesInContinent.size(); i++) {
       // current iteration
       Country currentCountry = countriesInContinent.get(i);
@@ -253,6 +255,42 @@ public class App {
     }
 
     Report report = new Report("topNPopulatedCitiesInNContinent", output);
+    return report;
+  }
+
+  /*
+   * The top N populated cities in a region where N is provided by the user.
+   */
+  public static Report topNPopulatedCitiesInNRegion(int n) {
+    String selectedRegion = "Eastern Europe";
+
+    ArrayList<Country> countriesInRegion = Country.getCountriesByRegion(selectedRegion);
+    ArrayList<City> allCitiesInSelectedRegion = new ArrayList<City>();
+    ArrayList<String> output = new ArrayList<String>();
+
+    // loops over every country in selectedRegion, to aggregate
+    // allCitiesInSelectedRegion
+
+    for (int i = 0; i < countriesInRegion.size(); i++) {
+      Country currentCountry = countriesInRegion.get(i);
+
+      ArrayList<City> currentCities = City.getCitiesByCountryCode(currentCountry.Code);
+      allCitiesInSelectedRegion.addAll(currentCities);
+    }
+
+    // sort
+    Collections.sort(allCitiesInSelectedRegion, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
+
+    // print first n cities
+    for (int i = 0; i < n; i++) {
+      output.add(allCitiesInSelectedRegion.get(i).toString());
+    }
+
+    Report report = new Report("topNPopulatedCitiesInNRegion", output);
     return report;
   }
 }
