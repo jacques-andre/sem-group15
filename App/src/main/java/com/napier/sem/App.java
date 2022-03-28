@@ -2,6 +2,9 @@ package com.napier.sem;
 
 import java.util.*;
 
+import com.napier.sem.Reports.CountryReport;
+import com.napier.sem.Reports.Report;
+
 public class App {
   public static void main(String[] args) {
     System.out.println(
@@ -10,7 +13,7 @@ public class App {
     ArrayList<Report> allReports = new ArrayList<Report>();
 
     allReports.add(countryLargestPopulationToSmallest());
-    allReports.add(countryContinentOrgnaisedLargestSmallest());
+    allReports.add(countryContinentOrgnaisedLargestSmallest("Asia"));
     allReports.add(countryRegionOrgnaisedLargestSmallest());
 
     allReports.add(topNPopulatedCountriesInWorld(5));
@@ -34,10 +37,11 @@ public class App {
   /*
    * "All the countries in the world organised by largest population to smallest."
    */
-  public static Report countryLargestPopulationToSmallest() {
+  public static CountryReport countryLargestPopulationToSmallest() {
     ArrayList<Country> allCountries = Country.getCountries();
 
-    ArrayList<String> output = new ArrayList<String>();
+    ArrayList<String> outputStr = new ArrayList<String>();
+    ArrayList<Country> outputCountry = new ArrayList<Country>();
 
     // sort
     Collections.sort(allCountries, new Comparator<Country>() {
@@ -47,19 +51,21 @@ public class App {
     });
 
     for (Country c : allCountries) {
-      output.add(c.toString());
+      outputStr.add(c.toString());
+      outputCountry.add(c);
     }
 
-    Report report = new Report("countryLargestPopulationToSmallest", output);
+    CountryReport report = new CountryReport("countryLargestPopulationToSmallest", outputStr, outputCountry);
     return report;
   }
 
   /*
    * "All the countries in a continent organised by largest population to smallest."
    */
-  public static Report countryContinentOrgnaisedLargestSmallest() {
-    ArrayList<Country> countriesInContinent = Country.getCountriesByContinent("Africa");
-    ArrayList<String> output = new ArrayList<String>();
+  public static CountryReport countryContinentOrgnaisedLargestSmallest(String continent) {
+    ArrayList<Country> countriesInContinent = Country.getCountriesByContinent(continent);
+    ArrayList<String> outputStr = new ArrayList<String>();
+    ArrayList<Country> outputCountry = new ArrayList<Country>();
 
     // sort
     Collections.sort(countriesInContinent, new Comparator<Country>() {
@@ -69,10 +75,11 @@ public class App {
     });
 
     for (Country c : countriesInContinent) {
-      output.add(c.toString());
+      outputStr.add(c.toString());
+      outputCountry.add(c);
     }
 
-    Report report = new Report("countryContinentOrgnaisedLargestSmallest", output);
+    CountryReport report = new CountryReport("countryContinentOrgnaisedLargestSmallest", outputStr, outputCountry);
     return report;
   }
 
