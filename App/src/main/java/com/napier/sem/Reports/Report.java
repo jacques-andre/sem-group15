@@ -68,7 +68,7 @@ public class Report {
       writer.write(templateEngine.process("template.html", ct));
       writer.close();
     } catch (Exception e) {
-      System.out.println("Error");
+      System.out.printf("Error %s\n", e.getMessage());
     }
   }
 
