@@ -113,4 +113,31 @@ public class City {
     }
     return citiesInCode;
   }
+
+  /**
+   * Returns all cities with district
+   * 
+   * @param district Found in DB, ex: "Victoria"
+   * @return ArrayList with cities only in district
+   */
+  public static ArrayList<City> getCitiesInDistrict(String district) {
+    // Create ArrayList to hold output
+    ArrayList<City> citiesInDistrict = new ArrayList<City>();
+
+    // Get every city using getCities()
+    ArrayList<City> allCities = getCities();
+
+    // loop over every city
+    for (int i = 0; i < allCities.size(); i++) {
+      // current iteration
+      City currentCity = allCities.get(i);
+
+      // check if the parameter countryCode matches current iteration
+      if (currentCity.District.equalsIgnoreCase(district)) {
+        // matches! Add to output ArrayList
+        citiesInDistrict.add(currentCity);
+      }
+    }
+    return citiesInDistrict;
+  }
 }
