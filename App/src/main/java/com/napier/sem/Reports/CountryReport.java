@@ -11,8 +11,9 @@ import com.napier.sem.Country;
 public class CountryReport extends Report {
   public ArrayList<Country> countryOutput = new ArrayList<Country>();
 
-  public CountryReport(String _title, ArrayList<String> _questionOutput, ArrayList<Country> _countryOutput) {
-    super(_title, _questionOutput);
+  public CountryReport(String _title, ArrayList<String> _stringOutput, String _comments,
+      ArrayList<Country> _countryOutput) {
+    super(_title, _stringOutput, _comments);
     this.countryOutput = _countryOutput;
   }
 
