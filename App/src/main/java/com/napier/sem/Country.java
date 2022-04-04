@@ -47,7 +47,7 @@ public class Country {
    * 
    * @return ArrayList of all countries in DB table.
    */
-  public static ArrayList<Country> getCountries() {
+  public static ArrayList<Country> getAllCountries() {
     // create an intial connection to db
     Connection con = Database.dbConnect();
 
@@ -94,7 +94,7 @@ public class Country {
    */
   public static ArrayList<Country> getCountriesByContinent(String continent) {
     // get all countries
-    ArrayList<Country> allCountries = getCountries();
+    ArrayList<Country> allCountries = getAllCountries();
     // holds output
     ArrayList<Country> countriesInContinent = new ArrayList<Country>();
 
@@ -116,7 +116,7 @@ public class Country {
    */
   public static ArrayList<Country> getCountriesByRegion(String region) {
     // get all countries
-    ArrayList<Country> allCountries = getCountries();
+    ArrayList<Country> allCountries = getAllCountries();
     // holds output
     ArrayList<Country> countriesInRegion = new ArrayList<Country>();
 
