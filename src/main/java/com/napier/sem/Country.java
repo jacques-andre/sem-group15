@@ -15,6 +15,7 @@ public class Country {
   public String Continent;
   public int Population;
   public String Region;
+  public City Capital;
 
   /**
    * Creates a new Country with the given params.
@@ -24,19 +25,22 @@ public class Country {
    * @param _continent  Continent
    * @param _population Population
    * @param _region     Region
+   * @param _capital    Capital city
    * @return New Country with params
    */
-  public Country(String _code, String _name, String _continent, int _population, String _region) {
+  public Country(String _code, String _name, String _continent, int _population, String _region, City _capital) {
     this.Code = _code;
     this.Name = _name;
     this.Continent = _continent;
     this.Population = _population;
     this.Region = _region;
+    this.Capital = _capital;
   }
 
   @Override
   public String toString() {
-    String out = String.format("Name:%s,Code:%s,Continent:%s,Population:%s", Name, Code, Continent, Population);
+    String out = String.format("Code:%s,Name:%s,Continent:%s,Population:%d,Region:%s,Captial:%s", Code, Name, Continent,
+        Population, Region, Capital.Name);
     return out;
   }
 
@@ -47,7 +51,7 @@ public class Country {
    * 
    * @return ArrayList of all countries in DB table.
    */
-  public static ArrayList<Country> getCountries() {
+  public static ArrayList<Country> getAllCountries() {
     // create an intial connection to db
     Connection con = Database.dbConnect();
 
@@ -60,18 +64,36 @@ public class Country {
 
       // run sql on db
       sqlReturn = sqlStatement.executeQuery(
-          "SELECT Code,Name,Continent,Population,Region FROM country;");
+          "SELECT country.Name as 'countryName'," +
+              "country.Code as 'countryCode'," +
+              "country.Continent as 'countryContinent'," +
+              "country.Region as 'countryRegion'," +
+              "country.Population as 'countryPopulation'," +
+              "city.ID as 'cityID'," +
+              "city.Name as 'cityName'," +
+              "city.CountryCode as 'cityCountryCode'," +
+              "city.District as 'cityDistrict'," +
+              "city.Population as 'cityPopulation'" +
+              "FROM country " +
+              "LEFT JOIN city ON city.ID = country.Capital;");
 
       // itterate through all rows
       while (sqlReturn.next()) {
-        String countryName = sqlReturn.getString("Name");
-        String code = sqlReturn.getString("Code");
-        String continentName = sqlReturn.getString("Continent");
-        String regionName = sqlReturn.getString("Region");
-        int population = sqlReturn.getInt("Population");
+        String countryName = sqlReturn.getString("countryName");
+        String countryCode = sqlReturn.getString("countryCode");
+        String countryContinentName = sqlReturn.getString("countryContinent");
+        String countryRegionName = sqlReturn.getString("countryRegion");
+        int countryPopulation = sqlReturn.getInt("countryPopulation");
+
+        String cityName = sqlReturn.getString("cityName");
+        String cityDistrict = sqlReturn.getString("cityDistrict");
+        int cityPopulation = sqlReturn.getInt("cityPopulation");
+
+        City capitalCity = new City(cityName, countryName, cityDistrict, cityPopulation);
 
         // create new country with these vars
-        Country toAdd = new Country(code, countryName, continentName, population, regionName);
+        Country toAdd = new Country(countryCode, countryName, countryContinentName, countryPopulation,
+            countryRegionName, capitalCity);
         // append to output list
         countries.add(toAdd);
       }
@@ -94,7 +116,7 @@ public class Country {
    */
   public static ArrayList<Country> getCountriesByContinent(String continent) {
     // get all countries
-    ArrayList<Country> allCountries = getCountries();
+    ArrayList<Country> allCountries = getAllCountries();
     // holds output
     ArrayList<Country> countriesInContinent = new ArrayList<Country>();
 
@@ -116,7 +138,7 @@ public class Country {
    */
   public static ArrayList<Country> getCountriesByRegion(String region) {
     // get all countries
-    ArrayList<Country> allCountries = getCountries();
+    ArrayList<Country> allCountries = getAllCountries();
     // holds output
     ArrayList<Country> countriesInRegion = new ArrayList<Country>();
 

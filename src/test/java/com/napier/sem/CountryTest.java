@@ -10,17 +10,17 @@ import static org.junit.Assert.assertEquals;
 public class CountryTest {
 
   /**
-   * Test if Country.getCountries() matches the same number of,
+   * Test if Country.getAllCountries() matches the same number of,
    * countries found in mysql
    */
   @Test
-  public void testGetCountries() {
-    System.out.println("Running testGetCountries");
+  public void testGetAllCountries() {
+    System.out.println("Testing:testGetAllCountries");
 
     // total rows in the country table
     int expectedLen = 239;
 
-    ArrayList<Country> countries = Country.getCountries();
+    ArrayList<Country> countries = Country.getAllCountries();
     int gotLen = countries.size();
 
     assertEquals(expectedLen, gotLen);
