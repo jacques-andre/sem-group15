@@ -85,13 +85,11 @@ public class Country {
         String countryRegionName = sqlReturn.getString("countryRegion");
         int countryPopulation = sqlReturn.getInt("countryPopulation");
 
-        int cityID = sqlReturn.getInt("cityID");
         String cityName = sqlReturn.getString("cityName");
-        String cityCountryCode = sqlReturn.getString("cityCountryCode");
         String cityDistrict = sqlReturn.getString("cityDistrict");
         int cityPopulation = sqlReturn.getInt("cityPopulation");
 
-        City capitalCity = new City(cityID, cityName, cityCountryCode, cityDistrict, cityPopulation);
+        City capitalCity = new City(cityName, countryName, cityDistrict, cityPopulation);
 
         // create new country with these vars
         Country toAdd = new Country(countryCode, countryName, countryContinentName, countryPopulation,

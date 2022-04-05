@@ -42,8 +42,8 @@
     </section>
 
 
-    <!--  Loop over every report & output -->
-    <section class="grid grid-cols-2 gap-3">
+    <!--  Loop over every country report & output -->
+    <section class="grid grid-cols-2 gap-3 my-3">
       <div th:each="cReport: ${countryReports}" th:id="${cReport.ReportTitle}">
         <div>
           <h2 class="text-2xl my-2 font-bold">
@@ -90,6 +90,45 @@
       </div>
     </section>
 
+    <!--  Loop over every city report & output -->
+    <section class="grid grid-cols-2 gap-3 my-3">
+      <div th:each="cityReport: ${cityReports}" th:id="${cityReport.ReportTitle}">
+        <div>
+          <h2 class="text-2xl my-2 font-bold">
+            ReportTitle: <span class="font-normal">"[(${cityReport.ReportTitle})]"</span>
+          </h2>
+          <h2 class="text-xl my-2 font-bold">
+            <span class="font-normal">[(${cityReport.Comments})]</span>
+          </h2>
+        </div>
+        <table class="border-collapse report-table">
+          <tr>
+            <th>Index</th>
+            <th>Name</th>
+            <th>Country</th>
+            <th>District</th>
+            <th>Population</th>
+          </tr>
+          <tr th:each="cityRow,cityIter: ${cityReport.cityOutput}">
+            <td>
+              [(${cityIter.index})]
+            </td>
+            <td>
+              [(${cityRow.Name})]
+            </td>
+            <td>
+              [(${cityRow.CountryName})]
+            </td>
+            <td>
+              [(${cityRow.District})]
+            </td>
+            <td>
+              [(${cityRow.Population})]
+            </td>
+          </tr>
+        </table>
+      </div>
+    </section>
   </div>
   <div class="flex justify-center p-3 text-sky-600">
     <a href="#">Back to top</a>

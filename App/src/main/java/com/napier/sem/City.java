@@ -10,9 +10,8 @@ import java.util.*;
  * Data is fetched from city table in DB
  */
 public class City {
-  public int Id; // Primary Key from DB ex: 1
   public String Name;
-  public String CountryCode;
+  public String CountryName;
   public String District;
   public int Population;
 
@@ -26,17 +25,16 @@ public class City {
    * @param _population  Population
    * @return New City with params
    */
-  public City(int _id, String _name, String _countryCode, String _district, int _population) {
-    this.Id = _id;
+  public City(String _name, String _countryName, String _district, int _population) {
     this.Name = _name;
-    this.CountryCode = _countryCode;
+    this.CountryName = _countryName;
     this.District = _district;
     this.Population = _population;
   }
 
   @Override
   public String toString() {
-    String out = String.format("CityName:%s,CountryCode:%s,District:%s,Population:%d", Name, CountryCode, District,
+    String out = String.format("CityName:%s,CountryName:%s,District:%s,Population:%d", Name, CountryName, District,
         Population);
     return out;
   }
@@ -62,19 +60,23 @@ public class City {
 
       // Run this query on DB, return values will be held in sqlReturn
       sqlReturn = sqlStatement.executeQuery(
-          "SELECT ID,Name,CountryCode,District,Population FROM city");
+          "SELECT city.Name as 'cityName'," +
+              "country.Name as 'countryName'," +
+              "city.District as 'cityDistrict'," +
+              "city.Population as 'cityPopulation'" +
+              " FROM city" +
+              " INNER JOIN country ON city.CountryCode = country.Code;");
 
       // iterate through all returned rows
       while (sqlReturn.next()) {
         // Get all the vars from the current iteration
-        int id = sqlReturn.getInt("ID");
-        String cityName = sqlReturn.getString("Name");
-        String countryCode = sqlReturn.getString("countryCode");
-        String district = sqlReturn.getString("District");
-        int population = sqlReturn.getInt("Population");
+        String cityName = sqlReturn.getString("cityName");
+        String countryName = sqlReturn.getString("countryName");
+        String district = sqlReturn.getString("cityDistrict");
+        int population = sqlReturn.getInt("cityPopulation");
 
         // create a new City class with these vars
-        City toAdd = new City(id, cityName, countryCode, district, population);
+        City toAdd = new City(cityName, countryName, district, population);
         // append new City into output list
         allCities.add(toAdd);
       }
@@ -88,12 +90,12 @@ public class City {
   }
 
   /**
-   * Returns all cities with countryCode
+   * Returns all cities with countryName
    * 
-   * @param countryCode Found in DB, ex: "AFG"
-   * @return ArrayList with cities only in countryCode
+   * @param countryName Found in DB, ex: "China"
+   * @return ArrayList with cities only in countryName
    */
-  public static ArrayList<City> getCitiesByCountryCode(String countryCode) {
+  public static ArrayList<City> getCitiesByCountryName(String countryName) {
     // Create ArrayList to hold output
     ArrayList<City> citiesInCode = new ArrayList<City>();
 
@@ -106,7 +108,7 @@ public class City {
       City currentCity = allCities.get(i);
 
       // check if the parameter countryCode matches current iteration
-      if (currentCity.CountryCode.equalsIgnoreCase(countryCode)) {
+      if (currentCity.CountryName.equalsIgnoreCase(countryName)) {
         // matches! Add to output ArrayList
         citiesInCode.add(currentCity);
       }
@@ -120,7 +122,7 @@ public class City {
    * @param district Found in DB, ex: "Victoria"
    * @return ArrayList with cities only in district
    */
-  public static ArrayList<City> getCitiesInDistrict(String district) {
+  public static ArrayList<City> getCitiesByDistrict(String district) {
     // Create ArrayList to hold output
     ArrayList<City> citiesInDistrict = new ArrayList<City>();
 
@@ -132,7 +134,7 @@ public class City {
       // current iteration
       City currentCity = allCities.get(i);
 
-      // check if the parameter countryCode matches current iteration
+      // check if the parameter district matches current iteration
       if (currentCity.District.equalsIgnoreCase(district)) {
         // matches! Add to output ArrayList
         citiesInDistrict.add(currentCity);

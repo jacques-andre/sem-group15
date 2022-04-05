@@ -43,7 +43,8 @@ public class Report {
    * 
    * @param allReports ArrayList of type Report, will be used in output report.
    */
-  public static void toHMTL(ArrayList<Report> allReports, ArrayList<CountryReport> countryReports) {
+  public static void toHMTL(ArrayList<Report> allReports, ArrayList<CountryReport> countryReports,
+      ArrayList<CityReport> cityReports) {
     TemplateEngine templateEngine = new TemplateEngine();
     ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
     Context ct = new Context();
@@ -61,6 +62,7 @@ public class Report {
     // inject into html
     ct.setVariable("reports", allReports);
     ct.setVariable("countryReports", countryReports);
+    ct.setVariable("cityReports", cityReports);
     ct.setVariable("time", dateStr);
 
     try {

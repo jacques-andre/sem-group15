@@ -23,6 +23,7 @@ public class App {
     countryReports.add(topNPopulatedRegionCountries(5, "Eastern Europe"));
 
     cityReports.add(citiesLargestPopulationToSmallest());
+    cityReports.add(topNPopulatedCitiesInNContinent(5, "Asia"));
 
     allReports.addAll(countryReports);
     allReports.addAll(cityReports);
@@ -32,7 +33,7 @@ public class App {
       System.out.println("----");
     }
 
-    Report.toHMTL(allReports, countryReports);
+    Report.toHMTL(allReports, countryReports, cityReports);
   }
 
   /*
@@ -79,6 +80,7 @@ public class App {
       }
     });
 
+    // Go through all countries (sorted) append to output
     for (Country c : countriesInContinent) {
       outputStr.add(c.toString());
       outputCountry.add(c);
@@ -107,6 +109,7 @@ public class App {
       }
     });
 
+    // Go through all countries (sorted) append to output
     for (Country c : countriesInRegion) {
       outputStr.add(c.toString());
       outputCountry.add(c);
@@ -134,6 +137,7 @@ public class App {
       }
     });
 
+    // Go through all countries (sorted) append to output
     for (int i = 0; i < n; i++) {
       Country currentCountry = allCountries.get(i);
       outputStr.add(currentCountry.toString());
@@ -163,6 +167,7 @@ public class App {
       }
     });
 
+    // Go through all countries (sorted) append to output
     for (int i = 0; i < n; i++) {
       Country currentCountry = countriesInContinent.get(i);
       outputStr.add(currentCountry.toString());
@@ -192,6 +197,7 @@ public class App {
       }
     });
 
+    // Go through all countries (sorted) append to output
     for (int i = 0; i < n; i++) {
       Country currentCountry = countriesInRegion.get(i);
       outputStr.add(currentCountry.toString());
@@ -221,6 +227,7 @@ public class App {
       }
     });
 
+    // Go through all countries (sorted) append to output
     for (City c : allCities) {
       outputStr.add(c.toString());
       outputCity.add(c);
@@ -230,41 +237,6 @@ public class App {
         outputStr, "", outputCity);
     return report;
   }
-
-  // /*
-  // * "The population of people, people living in cities, and people not living
-  // in cities in each country"
-  // */
-  // public static Report populationInCitiesAndNot() {
-  // List<Country> allCountries = Country.getAllCountries();
-  // ArrayList<String> output = new ArrayList<String>();
-
-  // for (Country currentCountry : allCountries) {
-  // int countryPopulation = currentCountry.Population;
-  // int cityPopulation = 0;
-
-  // // gets population of all cities in current country
-  // List<City> citiesInCode = City.getCitiesByCountryCode(currentCountry.Code);
-  // for (City city : citiesInCode) {
-  // cityPopulation += city.Population;
-  // }
-
-  // int outsideCity = countryPopulation - cityPopulation;
-  // double cityPercentage = (double) cityPopulation / countryPopulation;
-  // double outsideCityPercentage = (double) outsideCity / countryPopulation;
-  // cityPercentage *= 100;
-  // outsideCityPercentage *= 100;
-
-  // String outputString = String.format(
-  // "Country:%s,Country-Population:%d,City-Population:%d,City-Percentage:%f%%,Outside-city:%d,outsideCityPercentage:%f%%",
-  // currentCountry.Name, countryPopulation, cityPopulation, cityPercentage,
-  // outsideCity, outsideCityPercentage);
-
-  // output.add(outputString);
-  // }
-  // Report report = new Report("populationInCitiesAndNot", output);
-  // return report;
-  // }
 
   /*
    * "The top N populated cities in the world where N is provided by the user."
@@ -281,6 +253,7 @@ public class App {
       }
     });
 
+    // Go through all cities (sorted) append to output
     for (int i = 0; i < n; i++) {
       City currentCity = allCities.get(i);
       outputStr.add(currentCity.toString());
@@ -294,46 +267,44 @@ public class App {
     return report;
   }
 
-  // /*
-  // * "The top N populated cities in a continent where N is provided by the user"
-  // */
-  // public static CityReport topNPopulatedCitiesInNContinent(int n) {
-  // String selectedContinent = "Asia";
+  /*
+   * "The top N populated cities in a continent where N is provided by the user"
+   */
+  public static CityReport topNPopulatedCitiesInNContinent(int n, String continent) {
+    // Get all countries in continent
+    ArrayList<Country> countriesInContinent = Country.getCountriesByContinent(continent);
 
-  // ArrayList<Country> countriesInContinent =
-  // Country.getCountriesByContinent(selectedContinent);
-  // ArrayList<City> allCitiesInSelectedContinent = new ArrayList<City>();
+    // Get all cities from those countries
+    ArrayList<City> citiesInContinent = new ArrayList<City>();
 
-  // ArrayList<String> output = new ArrayList<String>();
+    ArrayList<String> outputStr = new ArrayList<String>();
+    ArrayList<City> outputCities = new ArrayList<City>();
 
-  // // loops over every country in selectedContinent to aggregate
-  // // allCitiesInSelectedContinent
-  // for (int i = 0; i < countriesInContinent.size(); i++) {
-  // // current iteration
-  // Country currentCountry = countriesInContinent.get(i);
+    // Go through every country in continent, append cities of that country
+    for (Country continentCountry : countriesInContinent) {
+      citiesInContinent.addAll(City.getCitiesByCountryName(continentCountry.Name));
+    }
 
-  // ArrayList<City> currentCities =
-  // City.getCitiesByCountryCode(currentCountry.Code);
-  // allCitiesInSelectedContinent.addAll(currentCities);
-  // }
+    // sort citiesInContinent by population
+    Collections.sort(citiesInContinent, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
 
-  // // sort
-  // Collections.sort(allCitiesInSelectedContinent, new Comparator<City>() {
-  // public int compare(City c1, City c2) {
-  // return c2.Population - c1.Population;
-  // }
-  // });
+    // Go through citiesInContinent (sorted) append to output
+    for (int i = 0; i < n; i++) {
+      City currentCity = citiesInContinent.get(i);
+      outputStr.add(currentCity.toString());
+      outputCities.add(currentCity);
+    }
 
-  // // print first n cities
-  // for (int i = 0; i < n; i++) {
-  // output.add(allCitiesInSelectedContinent.get(i).toString());
-  // output
-  // }
+    String comment = String.format("Using %d as N, Using %s as continent", n, continent);
 
-  // Report report = new Report("The top N populated cities in a continent where N
-  // is provided by the user", output);
-  // return report;
-  // }
+    CityReport report = new CityReport("The top N populated cities in a continent where N is provided by the user",
+        outputStr, comment, outputCities);
+    return report;
+  }
 
   // /*
   // * The top N populated cities in a region where N is provided by the user.
@@ -353,7 +324,7 @@ public class App {
   // Country currentCountry = countriesInRegion.get(i);
 
   // ArrayList<City> currentCities =
-  // City.getCitiesByCountryCode(currentCountry.Code);
+  // City.getCitiesByCountryName(currentCountry.Name);
   // allCitiesInSelectedRegion.addAll(currentCities);
   // }
 
@@ -421,6 +392,43 @@ public class App {
   // output.add(currentCity.toString());
   // }
   // Report report = new Report("topNPopulatedCitiesInNDistrict", output);
+  // return report;
+  // }
+
+  /*
+   * // * "The population of people, people living in cities, and people not
+   * living
+   * // in cities in each country"
+   * //
+   */
+  // public static Report populationInCitiesAndNot() {
+  // List<Country> allCountries = Country.getAllCountries();
+  // ArrayList<String> output = new ArrayList<String>();
+
+  // for (Country currentCountry : allCountries) {
+  // int countryPopulation = currentCountry.Population;
+  // int cityPopulation = 0;
+
+  // // gets population of all cities in current country
+  // List<City> citiesInCode = City.getCitiesByCountryCode(currentCountry.Code);
+  // for (City city : citiesInCode) {
+  // cityPopulation += city.Population;
+  // }
+
+  // int outsideCity = countryPopulation - cityPopulation;
+  // double cityPercentage = (double) cityPopulation / countryPopulation;
+  // double outsideCityPercentage = (double) outsideCity / countryPopulation;
+  // cityPercentage *= 100;
+  // outsideCityPercentage *= 100;
+
+  // String outputString = String.format(
+  // "Country:%s,Country-Population:%d,City-Population:%d,City-Percentage:%f%%,Outside-city:%d,outsideCityPercentage:%f%%",
+  // currentCountry.Name, countryPopulation, cityPopulation, cityPercentage,
+  // outsideCity, outsideCityPercentage);
+
+  // output.add(outputString);
+  // }
+  // Report report = new Report("populationInCitiesAndNot", output);
   // return report;
   // }
 }
