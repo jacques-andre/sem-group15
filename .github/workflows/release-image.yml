@@ -3,7 +3,7 @@ name: Create Release, Upload generated html to github pages
 on:
   push:
     branches:
-      - develop
+      - release
 
 jobs:
   create-release:
