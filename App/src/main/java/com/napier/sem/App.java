@@ -266,6 +266,10 @@ public class App {
     for (Country continentCountry : countriesInContinent) {
       outputCities.addAll(City.getCitiesByCountryName(continentCountry.Name));
     }
+    // Go through every city in continent, append str to outputStr
+    for (City continentCity : outputCities) {
+      outputStr.add(continentCity.toString());
+    }
 
     // sort outputCities by population
     Collections.sort(outputCities, new Comparator<City>() {
@@ -293,6 +297,10 @@ public class App {
     // Go through every country in region, append cities of that country
     for (Country regionCountry : countriesInRegion) {
       outputCities.addAll(City.getCitiesByCountryName(regionCountry.Name));
+    }
+    // Go through every city in region, append str to outputStr
+    for (City regionCity : outputCities) {
+      outputStr.add(regionCity.toString());
     }
 
     // sort outputCities by population
@@ -322,6 +330,10 @@ public class App {
         return c2.Population - c1.Population;
       }
     });
+    // Go through every city in country, append str to outputStr
+    for (City countryCity : outputCities) {
+      outputStr.add(countryCity.toString());
+    }
 
     String comment = String.format("Using %s as country", country);
 
@@ -343,6 +355,10 @@ public class App {
         return c2.Population - c1.Population;
       }
     });
+    // Go through every city in district, append str to outputStr
+    for (City districtCity : outputCities) {
+      outputStr.add(districtCity.toString());
+    }
 
     String comment = String.format("Using %s as district", district);
 
@@ -537,6 +553,11 @@ public class App {
       }
     });
 
+    // Go through every capital city in outputCities, append to outputStr
+    for (City capitalCity : outputCities) {
+      outputStr.add(capitalCity.toString());
+    }
+
     CityReport report = new CityReport(
         "All the capital cities in the world organised by largest population to smalles.",
         outputStr, "", outputCities);
@@ -564,6 +585,10 @@ public class App {
         return c2.Population - c1.Population;
       }
     });
+    // Go through every capital city in outputCities, append to outputStr
+    for (City capitalCity : outputCities) {
+      outputStr.add(capitalCity.toString());
+    }
 
     String comment = String.format("Using %s as continent", continent);
 
@@ -594,6 +619,11 @@ public class App {
         return c2.Population - c1.Population;
       }
     });
+
+    // Go through every capital city in outputCities, append to outputStr
+    for (City capitalCity : outputCities) {
+      outputStr.add(capitalCity.toString());
+    }
 
     String commnet = String.format("Using %s as region", region);
 
