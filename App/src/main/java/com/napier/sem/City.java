@@ -65,7 +65,7 @@ public class City {
               "city.District as 'cityDistrict'," +
               "city.Population as 'cityPopulation'" +
               " FROM city" +
-              " INNER JOIN country ON city.CountryCode = country.Code;");
+              " LEFT JOIN country ON city.CountryCode = country.Code;");
 
       // iterate through all returned rows
       while (sqlReturn.next()) {
