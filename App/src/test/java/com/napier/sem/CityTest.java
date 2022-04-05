@@ -52,8 +52,8 @@ public class CityTest {
    * cities with the district found in mysql
    */
   @Test
-  public void getCitiesByDistrict() {
-    System.out.println("Testing:getCitiesByDistrict");
+  public void testGetCitiesByDistrict() {
+    System.out.println("Testing:testGetCitiesByDistrict");
 
     String exampleDistrict = "Zhejiang";
 
