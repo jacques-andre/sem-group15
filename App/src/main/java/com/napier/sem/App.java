@@ -23,8 +23,14 @@ public class App {
     countryReports.add(topNPopulatedRegionCountries(5, "Eastern Europe"));
 
     cityReports.add(citiesLargestPopulationToSmallest());
+    cityReports.add(citiesInContinentLargestPopulationToSmallest("Africa"));
+    cityReports.add(citiesInRegionLargestPopulationToSmallest("Caribbean"));
+    cityReports.add(citiesInCountryLargestPopulationToSmallest("Australia"));
+    cityReports.add(citiesInDistrictLargestPopulationToSmallest("Shandong"));
+
     cityReports.add(topNPopulatedCitiesInNContinent(5, "Asia"));
     cityReports.add(topNPopulatedCitiesInNRegion(5, "Caribbean"));
+    cityReports.add(topNPopulatedCitiesInNCountry(5, "France"));
     cityReports.add(topNPopulatedCitiesInNCountry(5, "France"));
     cityReports.add(topNPopulatedCitiesInNDistrict(5, "Xinxiang"));
 
@@ -238,6 +244,104 @@ public class App {
 
     CityReport report = new CityReport("All the cities in the world organised by largest population to smallest.",
         outputStr, "", outputCity);
+    return report;
+  }
+
+  /*
+   * "All the cities in a continent organised by largest population to smallest."
+   */
+  public static CityReport citiesInContinentLargestPopulationToSmallest(String continent) {
+    ArrayList<Country> countriesInContinent = Country.getCountriesByContinent(continent);
+
+    ArrayList<String> outputStr = new ArrayList<String>();
+    ArrayList<City> outputCities = new ArrayList<City>();
+
+    // Go through every country in continent, append cities of that country
+    for (Country continentCountry : countriesInContinent) {
+      outputCities.addAll(City.getCitiesByCountryName(continentCountry.Name));
+    }
+
+    // sort outputCities by population
+    Collections.sort(outputCities, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
+
+    String comment = String.format("Using %s as continent", continent);
+
+    CityReport report = new CityReport("All the cities in a continent organised by largest population to smallest.",
+        outputStr, comment, outputCities);
+    return report;
+  }
+
+  /*
+   * "All the cities in a region organised by largest population to smallest."
+   */
+  public static CityReport citiesInRegionLargestPopulationToSmallest(String region) {
+    ArrayList<Country> countriesInRegion = Country.getCountriesByRegion(region);
+
+    ArrayList<String> outputStr = new ArrayList<String>();
+    ArrayList<City> outputCities = new ArrayList<City>();
+
+    // Go through every country in region, append cities of that country
+    for (Country regionCountry : countriesInRegion) {
+      outputCities.addAll(City.getCitiesByCountryName(regionCountry.Name));
+    }
+
+    // sort outputCities by population
+    Collections.sort(outputCities, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
+
+    String comment = String.format("Using %s as region", region);
+
+    CityReport report = new CityReport("All the cities in a region organised by largest population to smallest.",
+        outputStr, comment, outputCities);
+    return report;
+  }
+
+  /*
+   * "All the cities in a country organised by largest population to smallest."
+   */
+  public static CityReport citiesInCountryLargestPopulationToSmallest(String country) {
+    ArrayList<String> outputStr = new ArrayList<String>();
+    ArrayList<City> outputCities = City.getCitiesByCountryName(country);
+
+    // sort outputCities by population
+    Collections.sort(outputCities, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
+
+    String comment = String.format("Using %s as country", country);
+
+    CityReport report = new CityReport("All the cities in a country organised by largest population to smallest.",
+        outputStr, comment, outputCities);
+    return report;
+  }
+
+  /*
+   * "All the cities in a district organised by largest population to smallest."
+   */
+  public static CityReport citiesInDistrictLargestPopulationToSmallest(String district) {
+    ArrayList<String> outputStr = new ArrayList<String>();
+    ArrayList<City> outputCities = City.getCitiesByDistrict(district);
+
+    // sort outputCities by population
+    Collections.sort(outputCities, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
+
+    String comment = String.format("Using %s as district", district);
+
+    CityReport report = new CityReport("All the cities in a district organised by largest population to smallest.",
+        outputStr, comment, outputCities);
     return report;
   }
 
