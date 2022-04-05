@@ -28,9 +28,9 @@ public class App {
     cityReports.add(citiesInCountryLargestPopulationToSmallest("Australia"));
     cityReports.add(citiesInDistrictLargestPopulationToSmallest("Shandong"));
 
+    cityReports.add(topNPopulatedCitiesInWorld(5));
     cityReports.add(topNPopulatedCitiesInNContinent(5, "Asia"));
     cityReports.add(topNPopulatedCitiesInNRegion(5, "Caribbean"));
-    cityReports.add(topNPopulatedCitiesInNCountry(5, "France"));
     cityReports.add(topNPopulatedCitiesInNCountry(5, "France"));
     cityReports.add(topNPopulatedCitiesInNDistrict(5, "Xinxiang"));
 
