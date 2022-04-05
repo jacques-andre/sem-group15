@@ -103,4 +103,68 @@ public class AppTest {
     }
   }
 
+  /**
+   * Test if App.topNPopulatedCountriesInWorld() returns correct
+   * number of countries, and is in correct order (population descending)
+   */
+  @Test
+  public void testTopNPopulatedCountriesInWorld() throws Exception {
+    System.out.println("Testing:testTopNPopulatedCountriesInWorld");
+
+    int n = 5;
+
+    // Expecting to get n number of countries
+    int expectedLen = n;
+
+    CountryReport result = App.topNPopulatedCountriesInWorld(n);
+    int gotLen = result.countryOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through countryOutput, check if descending
+    for (int i = 0; i < result.countryOutput.size() - 1; i++) {
+      Country currentCountry = result.countryOutput.get(i);
+      Country nextCountry = result.countryOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCountry.Population >= nextCountry.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
+
+  /**
+   * Test if App.topNPopulatedContinentCountries() returns correct
+   * number of countries, and is in correct order (population descending)
+   */
+  @Test
+  public void testTopNPopulatedContinentCountries() throws Exception {
+    System.out.println("Testing:testTopNPopulatedContinentCountries");
+
+    int n = 5;
+    String exampleContinent = "Africa";
+
+    // Expecting to get n number of countries
+    int expectedLen = n;
+
+    CountryReport result = App.topNPopulatedContinentCountries(n, exampleContinent);
+    int gotLen = result.countryOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through countryOutput, check if descending
+    for (int i = 0; i < result.countryOutput.size() - 1; i++) {
+      Country currentCountry = result.countryOutput.get(i);
+      Country nextCountry = result.countryOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCountry.Population >= nextCountry.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
 }
