@@ -24,6 +24,9 @@ public class App {
 
     cityReports.add(citiesLargestPopulationToSmallest());
     cityReports.add(topNPopulatedCitiesInNContinent(5, "Asia"));
+    cityReports.add(topNPopulatedCitiesInNRegion(5, "Caribbean"));
+    cityReports.add(topNPopulatedCitiesInNCountry(5, "France"));
+    cityReports.add(topNPopulatedCitiesInNDistrict(5, "Xinxiang"));
 
     allReports.addAll(countryReports);
     allReports.addAll(cityReports);
@@ -306,94 +309,102 @@ public class App {
     return report;
   }
 
-  // /*
-  // * The top N populated cities in a region where N is provided by the user.
-  // */
-  // public static Report topNPopulatedCitiesInNRegion(int n) {
-  // String selectedRegion = "Eastern Europe";
+  /*
+   * "The top N populated cities in a region where N is provided by the user."
+   */
+  public static CityReport topNPopulatedCitiesInNRegion(int n, String region) {
+    // Get countries in region
+    ArrayList<Country> countriesInRegion = Country.getCountriesByRegion(region);
+    ArrayList<City> citiesInRegion = new ArrayList<City>();
 
-  // ArrayList<Country> countriesInRegion =
-  // Country.getCountriesByRegion(selectedRegion);
-  // ArrayList<City> allCitiesInSelectedRegion = new ArrayList<City>();
-  // ArrayList<String> output = new ArrayList<String>();
+    ArrayList<City> outputCities = new ArrayList<City>();
+    ArrayList<String> outputStr = new ArrayList<String>();
 
-  // // loops over every country in selectedRegion, to aggregate
-  // // allCitiesInSelectedRegion
+    // Go through every country in region, append cities of that country
+    for (Country regionCountry : countriesInRegion) {
+      citiesInRegion.addAll(City.getCitiesByCountryName(regionCountry.Name));
+    }
 
-  // for (int i = 0; i < countriesInRegion.size(); i++) {
-  // Country currentCountry = countriesInRegion.get(i);
+    // sort citiesInRegion by population
+    Collections.sort(citiesInRegion, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
 
-  // ArrayList<City> currentCities =
-  // City.getCitiesByCountryName(currentCountry.Name);
-  // allCitiesInSelectedRegion.addAll(currentCities);
-  // }
+    // Go through citiesInRegion (sorted) append to output
+    for (int i = 0; i < n; i++) {
+      City currentCity = citiesInRegion.get(i);
+      outputStr.add(currentCity.toString());
+      outputCities.add(currentCity);
+    }
 
-  // // sort
-  // Collections.sort(allCitiesInSelectedRegion, new Comparator<City>() {
-  // public int compare(City c1, City c2) {
-  // return c2.Population - c1.Population;
-  // }
-  // });
+    String comment = String.format("Using %d as N, Using %s as region", n, region);
 
-  // // print first n cities
-  // for (int i = 0; i < n; i++) {
-  // output.add(allCitiesInSelectedRegion.get(i).toString());
-  // }
+    CityReport report = new CityReport("The top N populated cities in a region where N is provided by the user.",
+        outputStr, comment, outputCities);
+    return report;
+  }
 
-  // Report report = new Report("topNPopulatedCitiesInNRegion", output);
-  // return report;
-  // }
+  /*
+   * "The top N populated cities in a country where N is provided by the user."
+   */
+  public static CityReport topNPopulatedCitiesInNCountry(int n, String country) {
+    // Get cities in country
+    ArrayList<City> citiesInCountry = City.getCitiesByCountryName(country);
 
-  // /*
-  // * "The top N populated cities in a country where N is provided by the user."
-  // */
-  // public static Report topNPopulatedCitiesInNCountry(int n) {
-  // String selectedCountryCode = "AUT";
+    ArrayList<City> outputCities = new ArrayList<City>();
+    ArrayList<String> outputStr = new ArrayList<String>();
 
-  // ArrayList<City> citiesInCode =
-  // City.getCitiesByCountryCode(selectedCountryCode);
-  // ArrayList<String> output = new ArrayList<String>();
+    // sort citiesInRegion by population
+    Collections.sort(citiesInCountry, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
 
-  // // sort
-  // Collections.sort(citiesInCode, new Comparator<City>() {
-  // public int compare(City c1, City c2) {
-  // return c2.Population - c1.Population;
-  // }
-  // });
+    // Go through citiesInCountry (sorted) append to output
+    for (int i = 0; i < n; i++) {
+      City currentCity = citiesInCountry.get(i);
+      outputStr.add(currentCity.toString());
+      outputCities.add(currentCity);
+    }
 
-  // for (int i = 0; i < n; i++) {
-  // City currentCity = citiesInCode.get(i);
-  // output.add(currentCity.toString());
-  // }
+    String comment = String.format("Using %d as N, Using %s as country", n, country);
 
-  // Report report = new Report("topNPopulatedCitiesInNCountry", output);
-  // return report;
-  // }
+    CityReport report = new CityReport("The top N populated cities in a country where N is provided by the user.",
+        outputStr, comment, outputCities);
+    return report;
+  }
 
-  // /*
-  // * "The top N populated cities in a district where N is provided by the user."
-  // */
-  // public static Report topNPopulatedCitiesInNDistrict(int n) {
-  // String selectedDistrict = "Zhejiang";
+  /*
+   * "The top N populated cities in a district where N is provided by the user."
+   */
+  public static CityReport topNPopulatedCitiesInNDistrict(int n, String district) {
+    ArrayList<City> citiesInDistrict = City.getCitiesByDistrict(district);
+    ArrayList<String> outputStr = new ArrayList<String>();
+    ArrayList<City> outputCities = new ArrayList<City>();
 
-  // ArrayList<City> citiesInDistrict =
-  // City.getCitiesInDistrict(selectedDistrict);
-  // ArrayList<String> output = new ArrayList<String>();
+    // sort citiesInDistrict by population
+    Collections.sort(citiesInDistrict, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
 
-  // // sort
-  // Collections.sort(citiesInDistrict, new Comparator<City>() {
-  // public int compare(City c1, City c2) {
-  // return c2.Population - c1.Population;
-  // }
-  // });
+    // Go through citiesInDistrict (sorted) append to output
+    for (int i = 0; i < n; i++) {
+      City currentCity = citiesInDistrict.get(i);
+      outputStr.add(currentCity.toString());
+      outputCities.add(currentCity);
+    }
+    String comment = String.format("Using %d as N, Using %s as district", n, district);
 
-  // for (int i = 0; i < n; i++) {
-  // City currentCity = citiesInDistrict.get(i);
-  // output.add(currentCity.toString());
-  // }
-  // Report report = new Report("topNPopulatedCitiesInNDistrict", output);
-  // return report;
-  // }
+    CityReport report = new CityReport("The top N populated cities in a district where N is provided by the user.",
+        outputStr, comment, outputCities);
+
+    return report;
+  }
 
   /*
    * // * "The population of people, people living in cities, and people not

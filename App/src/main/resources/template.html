@@ -34,9 +34,10 @@
     <!-- Loop over every report title -->
     <section class="py-3">
       <p class="text-xl">Generated Reports:</p>
-      <div th:each="report: ${reports}">
+      <div th:each="report,reportIter: ${reports}">
         <a class="text-lg text-sky-600" th:href="${'#'+ report.ReportTitle}">
           [(${report.ReportTitle})]
+          <span class="text-sm">([(${{reportIter.current}})])</span>
         </a>
       </div>
     </section>
