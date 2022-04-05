@@ -15,7 +15,7 @@ public class CityTest {
    */
   @Test
   public void testGetCities() {
-    System.out.println("Running testGetCities");
+    System.out.println("Testing:testGetCities");
 
     // total rows in the city table
     int expectedLen = 4079;
@@ -28,20 +28,20 @@ public class CityTest {
   }
 
   /**
-   * Test if City.getCitiesByCountryCode() returns the same number of,
+   * Test if City.getCities() returns the same number of,
    * cities with the countryCode found in mysql
    */
   @Test
-  public void testGetCitiesByCountryCode() {
-    System.out.println("Runking testGetCitiesByCountryCode");
+  public void testGetCitiesByCountryName() {
+    System.out.println("Testing:testGetCitiesByCountryName");
 
-    String exampleCode = "AUS";
+    String exampleCountry = "Australia";
 
-    // rows in the city table with exampleCode
+    // rows in the city table with exampleCountry
     int expectedLen = 14;
 
-    ArrayList<City> citiesInCode = City.getCitiesByCountryCode("AUS");
-    int gotLen = citiesInCode.size();
+    ArrayList<City> citiesInCountry = City.getCitiesByCountryName(exampleCountry);
+    int gotLen = citiesInCountry.size();
 
     assertEquals(expectedLen, gotLen);
     System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
