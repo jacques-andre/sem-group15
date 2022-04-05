@@ -34,6 +34,12 @@ public class App {
     cityReports.add(topNPopulatedCitiesInNCountry(5, "France"));
     cityReports.add(topNPopulatedCitiesInNDistrict(5, "Xinxiang"));
 
+    cityReports.add(capitalCitiesLargestPopulationToSmallest());
+    cityReports.add(capitalCitiesInContinentLargestPopulationToSmallest("Africa"));
+    cityReports.add(capitalCitiesInRegionLargestPopulationToSmallest("Caribbean"));
+
+    cityReports.add(topNPopulatedCapitalCities(5));
+
     allReports.addAll(countryReports);
     allReports.addAll(cityReports);
 
@@ -505,6 +511,132 @@ public class App {
     String comment = String.format("Using %d as N, Using %s as district", n, district);
 
     CityReport report = new CityReport("The top N populated cities in a district where N is provided by the user.",
+        outputStr, comment, outputCities);
+
+    return report;
+  }
+
+  /*
+   * "All the capital cities in the world organised by largest population to smallest."
+   */
+  public static CityReport capitalCitiesLargestPopulationToSmallest() {
+    ArrayList<Country> allCountries = Country.getAllCountries();
+
+    ArrayList<String> outputStr = new ArrayList<String>();
+    ArrayList<City> outputCities = new ArrayList<City>();
+
+    // Go through all countries, append capitals to outputCities
+    for (Country c : allCountries) {
+      outputCities.add(c.Capital);
+    }
+
+    // sort outputCities by population
+    Collections.sort(outputCities, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
+
+    CityReport report = new CityReport(
+        "All the capital cities in the world organised by largest population to smalles.",
+        outputStr, "", outputCities);
+
+    return report;
+  }
+
+  /*
+   * "All the capital cities in a continent organised by largest population to smallest."
+   */
+  public static CityReport capitalCitiesInContinentLargestPopulationToSmallest(String continent) {
+    ArrayList<Country> countriesInContinent = Country.getCountriesByContinent(continent);
+
+    ArrayList<String> outputStr = new ArrayList<String>();
+    ArrayList<City> outputCities = new ArrayList<City>();
+
+    // Go through all countries in continent, append capitals to outputCities
+    for (Country c : countriesInContinent) {
+      outputCities.add(c.Capital);
+    }
+
+    // sort outputCities by population
+    Collections.sort(outputCities, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
+
+    String comment = String.format("Using %s as continent", continent);
+
+    CityReport report = new CityReport(
+        "All the capital cities in a continent organised by largest population to smallest.",
+        outputStr, comment, outputCities);
+
+    return report;
+  }
+
+  /*
+   * "All the capital cities in a region organised by largest to smallest."
+   */
+  public static CityReport capitalCitiesInRegionLargestPopulationToSmallest(String region) {
+    ArrayList<Country> countriesInRegion = Country.getCountriesByRegion(region);
+
+    ArrayList<String> outputStr = new ArrayList<String>();
+    ArrayList<City> outputCities = new ArrayList<City>();
+
+    // Go through all countries in region, append capitals to outputCities
+    for (Country c : countriesInRegion) {
+      outputCities.add(c.Capital);
+    }
+
+    // sort outputCities by population
+    Collections.sort(outputCities, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
+
+    String commnet = String.format("Using %s as region", region);
+
+    CityReport report = new CityReport(
+        "All the capital cities in a region organised by largest to smallest.",
+        outputStr, commnet, outputCities);
+
+    return report;
+  }
+
+  /*
+   * "The top N populated capital cities in the world where N is provided by the user."
+   */
+  public static CityReport topNPopulatedCapitalCities(int n) {
+    ArrayList<Country> allCountries = Country.getAllCountries();
+    ArrayList<City> capitalCities = new ArrayList<City>();
+
+    ArrayList<String> outputStr = new ArrayList<String>();
+    ArrayList<City> outputCities = new ArrayList<City>();
+
+    // Go through all countries, append capitals to capitalCities
+    for (Country c : allCountries) {
+      capitalCities.add(c.Capital);
+    }
+
+    // sort capitalCities by population
+    Collections.sort(capitalCities, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
+
+    // Go through capitalCities (sorted) append to output
+    for (int i = 0; i < n; i++) {
+      City currentCity = capitalCities.get(i);
+      outputStr.add(currentCity.toString());
+      outputCities.add(currentCity);
+    }
+
+    String comment = String.format("Using %d as N", n);
+
+    CityReport report = new CityReport(
+        "The top N populated capital cities in the world where N is provided by the user.",
         outputStr, comment, outputCities);
 
     return report;
