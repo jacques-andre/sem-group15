@@ -46,4 +46,24 @@ public class CityTest {
     assertEquals(expectedLen, gotLen);
     System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
   }
+
+  /**
+   * Test if City.getCitiesByDistrict() returns the same number of,
+   * cities with the district found in mysql
+   */
+  @Test
+  public void getCitiesByDistrict() {
+    System.out.println("Testing:getCitiesByDistrict");
+
+    String exampleDistrict = "Zhejiang";
+
+    // rows in the city table with exampleDistrict
+    int expectedLen = 16;
+
+    ArrayList<City> citiesInDistrict = City.getCitiesByDistrict(exampleDistrict);
+    int gotLen = citiesInDistrict.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+  }
 }
