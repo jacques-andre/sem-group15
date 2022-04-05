@@ -6,7 +6,7 @@ on:
       - develop
 
 jobs:
-  Create release:
+  create-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,7 +23,7 @@ jobs:
           automatic_release_tag: "latest"
           files: |
             ./App/target/*.jar
-  Generate HTML:
+  generate-html:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
