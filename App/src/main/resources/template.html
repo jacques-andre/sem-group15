@@ -1,21 +1,27 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html class="scroll-smooth">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>SEM Group 15 Reports</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .code-block {
-      background-color: #eff1f3;
-      font-family: sans-serif;
-      font-size: 1rem;
-    }
-    .dark-bg{
-      background-color: #101112;
-    }
-  </style>
 </head>
+
+<style>
+  .report-table td,
+  .report-table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  .report-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .report-table tr:hover {
+    background-color: #ddd;
+  }
+</style>
 
 <body>
   <div class="m-4">
@@ -25,35 +31,107 @@
       <a class="text-sky-600" href="https://github.com/jacques-andre/sem-group15">sem-group15 github</a>
     </header>
 
+    <!-- Loop over every report title -->
     <section class="py-3">
       <p class="text-xl">Generated Reports:</p>
-      <!-- Loop over every report title -->
-      <div th:each="report: ${reports}">
-        <div>
-          <a class="text-lg text-sky-600" th:href="${'#'+ report.ReportTitle}">
-            [(${report.ReportTitle})]
-          </a>
-        </div>
+      <div th:each="report,reportIter: ${reports}">
+        <a class="text-lg text-sky-600" th:href="${'#'+ report.ReportTitle}">
+          [(${report.ReportTitle})]
+          <span class="text-sm">([(${{reportIter.current}})])</span>
+        </a>
+      </div>
     </section>
 
 
-    <section class="grid grid-cols-2 gap-3">
-      <!--  Loop over every report & output -->
-      <div th:each="report: ${reports}" th:id="${report.ReportTitle}">
-        <div class="">
-          <h2 class="text-2xl my-2">
-            [(${report.ReportTitle})]:
+    <!--  Loop over every country report & output -->
+    <section class="grid grid-cols-2 gap-3 my-3">
+      <div th:each="cReport: ${countryReports}" th:id="${cReport.ReportTitle}">
+        <div>
+          <h2 class="text-2xl my-2 font-bold">
+            ReportTitle: <span class="font-normal">"[(${cReport.ReportTitle})]"</span>
           </h2>
-          <div class="code-block p-5">
-            <p th:each="s : ${report.QuestionOutput}" class="p-1">
-              [(${s})]
-            </p>
-          </div>
+          <h2 class="text-xl my-2 font-bold">
+            <span class="font-normal">[(${cReport.Comments})]</span>
+          </h2>
         </div>
+        <table class="border-collapse report-table">
+          <tr>
+            <th>Index</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Continent</th>
+            <th>Region</th>
+            <th>Population</th>
+            <th>Capital</th>
+          </tr>
+          <tr th:each="cRow,cIter: ${cReport.countryOutput}">
+            <td>
+              [(${cIter.index})]
+            </td>
+            <td>
+              [(${cRow.Code})]
+            </td>
+            <td>
+              [(${cRow.Name})]
+            </td>
+            <td>
+              [(${cRow.Continent})]
+            </td>
+            <td>
+              [(${cRow.Region})]
+            </td>
+            <td>
+              [(${cRow.Population})]
+            </td>
+            <td>
+              [(${cRow.Capital.Name})]
+            </td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!--  Loop over every city report & output -->
+    <section class="grid grid-cols-2 gap-3 my-3">
+      <div th:each="cityReport: ${cityReports}" th:id="${cityReport.ReportTitle}">
+        <div>
+          <h2 class="text-2xl my-2 font-bold">
+            ReportTitle: <span class="font-normal">"[(${cityReport.ReportTitle})]"</span>
+          </h2>
+          <h2 class="text-xl my-2 font-bold">
+            <span class="font-normal">[(${cityReport.Comments})]</span>
+          </h2>
+        </div>
+        <table class="border-collapse report-table">
+          <tr>
+            <th>Index</th>
+            <th>Name</th>
+            <th>Country</th>
+            <th>District</th>
+            <th>Population</th>
+          </tr>
+          <tr th:each="cityRow,cityIter: ${cityReport.cityOutput}">
+            <td>
+              [(${cityIter.index})]
+            </td>
+            <td>
+              [(${cityRow.Name})]
+            </td>
+            <td>
+              [(${cityRow.CountryName})]
+            </td>
+            <td>
+              [(${cityRow.District})]
+            </td>
+            <td>
+              [(${cityRow.Population})]
+            </td>
+          </tr>
+        </table>
       </div>
     </section>
   </div>
-  <div class="flex justify-center dark-bg p-3 text-sky-600">
+  <div class="flex justify-center p-3 text-sky-600">
     <a href="#">Back to top</a>
   </div>
 </body>
