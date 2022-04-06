@@ -16,7 +16,7 @@ public class AppTest {
    */
   @Test
   public void testCountryLargestPopulationToSmallest() throws Exception {
-    System.out.println("Running testCountryLargestPopulationToSmallest");
+    System.out.println("Testing:testCountryLargestPopulationToSmallest");
 
     // total rows in the country table
     int expectedLen = 239;
@@ -47,7 +47,7 @@ public class AppTest {
    */
   @Test
   public void testCountryContinentOrgnaisedLargestSmallest() throws Exception {
-    System.out.println("Running testCountryContinentOrgnaisedLargestSmallest");
+    System.out.println("Testing:testCountryContinentOrgnaisedLargestSmallest");
 
     // total rows in the country table with continent "Asia"
     int expectedLen = 51;
