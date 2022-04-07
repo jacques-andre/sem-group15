@@ -55,7 +55,7 @@ public class Report {
     templateEngine.setTemplateResolver(resolver);
 
     // Get build time
-    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     Date date = new Date();
     String dateStr = dateFormat.format(date);
 
