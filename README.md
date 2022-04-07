@@ -4,8 +4,11 @@
 
 [![codecov](https://codecov.io/gh/jacques-andre/sem-group15/branch/master/graph/badge.svg?token=S7XK0I86OQ)](https://codecov.io/gh/jacques-andre/sem-group15)
 
-All reports are automatically generated on every merge to release and uploaded to github pages: https://jacques-andre.github.io/sem-group15/
+All reports are automatically generated on every merge to release and uploaded to github pages: 
 
+**https://jacques-andre.github.io/sem-group15/**
+
+<img src=".github/static/github-pages-preview.png">
 
 # Tools for development:
 
