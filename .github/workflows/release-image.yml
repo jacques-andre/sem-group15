@@ -1,0 +1,49 @@
+name: Create Release, Upload generated html to github pages
+
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build mvn
+        run: cd App && DB_HOST=localhost mvn -ntp clean compile assembly:single
+
+      - name: Create release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          automatic_release_tag: "latest"
+          files: |
+            ./App/target/*.jar
+  generate-html:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build the containers
+        run: docker-compose -f docker-compose-prod.yml up -d
+
+      - name: Check running containers
+        run: docker ps -a
+
+      - name: Build mvn
+        run: cd App && DB_HOST=localhost mvn -ntp clean compile assembly:single
+
+      - name: Run jar
+        run: cd App && DB_HOST=localhost java -jar ./target/seMethods-1.0-jar-with-dependencies.jar
+
+      - name: Deploy to github pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./App
+
