@@ -1,4 +1,7 @@
-![github actions](https://github.com/jacques-andre/sem-group15/actions/workflows/update-image.yml/badge.svg)
+
+
+[![Unit test, coverage and build containers.](https://github.com/jacques-andre/sem-group15/actions/workflows/test-image.yml/badge.svg)](https://github.com/jacques-andre/sem-group15/actions/workflows/test-image.yml)
+
 [![codecov](https://codecov.io/gh/jacques-andre/sem-group15/branch/master/graph/badge.svg?token=S7XK0I86OQ)](https://codecov.io/gh/jacques-andre/sem-group15)
 
 # SET08103 SEM Group 15 Coursework

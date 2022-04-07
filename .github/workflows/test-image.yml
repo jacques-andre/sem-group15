@@ -38,12 +38,15 @@ jobs:
     runs-on: ubuntu-latest
     name: build
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Build the containers
-      run: docker-compose -f docker-compose-prod.yml up -d
-    - name: Check running containers
-      run: docker ps -a
-    - name: View App Logs
-      run: sleep 30; docker logs app 
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build the containers
+        run: docker-compose -f docker-compose-prod.yml up -d
+
+      - name: Check running containers
+        run: docker ps -a
+
+      - name: View App Logs
+        run: sleep 30; docker logs app 
 
