@@ -423,4 +423,103 @@ public class AppTest {
       }
     }
   }
+
+  /**
+   * Test if App.topNPopulatedCitiesInNRegion() returns correct
+   * number of cities, and is in correct order (population descending)
+   */
+  @Test
+  public void testTopNPopulatedCitiesInNRegion() throws Exception {
+    System.out.println("Testing:testTopNPopulatedCitiesInNRegion");
+
+    int n = 5;
+    String exampleRegion = "Middle East";
+
+    // Expecting to get n cities
+    int expectedLen = n;
+
+    CityReport result = App.topNPopulatedCitiesInNRegion(n, exampleRegion);
+    int gotLen = result.cityOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through cityOutput, check if descending
+    for (int i = 0; i < result.cityOutput.size() - 1; i++) {
+      City currentCity = result.cityOutput.get(i);
+      City nextCity = result.cityOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCity.Population >= nextCity.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
+
+  /**
+   * Test if App.topNPopulatedCitiesInNCountry() returns correct
+   * number of cities, and is in correct order (population descending)
+   */
+  @Test
+  public void testTopNPopulatedCitiesInNCountry() throws Exception {
+    System.out.println("Testing:testTopNPopulatedCitiesInNCountry");
+
+    int n = 5;
+    String exampleCountry = "Australia";
+
+    // Expecting to get n cities
+    int expectedLen = n;
+
+    CityReport result = App.topNPopulatedCitiesInNCountry(n, exampleCountry);
+    int gotLen = result.cityOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through cityOutput, check if descending
+    for (int i = 0; i < result.cityOutput.size() - 1; i++) {
+      City currentCity = result.cityOutput.get(i);
+      City nextCity = result.cityOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCity.Population >= nextCity.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
+
+  /**
+   * Test if App.topNPopulatedCitiesInNDistrict() returns correct
+   * number of cities, and is in correct order (population descending)
+   */
+  @Test
+  public void testTopNPopulatedCitiesInNDistrict() throws Exception {
+    System.out.println("Testing:testTopNPopulatedCitiesInNDistrict");
+
+    int n = 5;
+    String exampleDistrict = "England";
+
+    // Expecting to get n cities
+    int expectedLen = n;
+
+    CityReport result = App.topNPopulatedCitiesInNDistrict(n, exampleDistrict);
+    int gotLen = result.cityOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through cityOutput, check if descending
+    for (int i = 0; i < result.cityOutput.size() - 1; i++) {
+      City currentCity = result.cityOutput.get(i);
+      City nextCity = result.cityOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCity.Population >= nextCity.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
 }
