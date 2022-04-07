@@ -204,7 +204,7 @@ public class AppTest {
 
   /**
    * Test if App.citiesLargestPopulationToSmallest() returns correct
-   * number of countries, and is in correct order (population descending)
+   * number of cities, and is in correct order (population descending)
    */
   @Test
   public void testCitiesLargestPopulationToSmallest() throws Exception {
@@ -234,7 +234,7 @@ public class AppTest {
 
   /**
    * Test if App.citiesInContinentLargestPopulationToSmallest() returns correct
-   * number of countries, and is in correct order (population descending)
+   * number of cities, and is in correct order (population descending)
    */
   @Test
   public void testCitiesInContinentLargestPopulationToSmallest() throws Exception {
@@ -245,6 +245,102 @@ public class AppTest {
     int expectedLen = 366;
 
     CityReport result = App.citiesInContinentLargestPopulationToSmallest(exampleContinent);
+    int gotLen = result.cityOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through cityOutput, check if descending
+    for (int i = 0; i < result.cityOutput.size() - 1; i++) {
+      City currentCity = result.cityOutput.get(i);
+      City nextCity = result.cityOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCity.Population >= nextCity.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
+
+  /**
+   * Test if App.citiesInRegionLargestPopulationToSmallest() returns correct
+   * number of cities, and is in correct order (population descending)
+   */
+  @Test
+  public void testCitiesInRegionLargestPopulationToSmallest() throws Exception {
+    System.out.println("Testing:testCitiesInRegionLargestPopulationToSmallest");
+
+    String exampleRegion = "Caribbean";
+
+    // This matches rows found in sql
+    int expectedLen = 58;
+
+    CityReport result = App.citiesInRegionLargestPopulationToSmallest(exampleRegion);
+    int gotLen = result.cityOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through cityOutput, check if descending
+    for (int i = 0; i < result.cityOutput.size() - 1; i++) {
+      City currentCity = result.cityOutput.get(i);
+      City nextCity = result.cityOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCity.Population >= nextCity.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
+
+  /**
+   * Test if App.citiesInCountryLargestPopulationToSmallest() returns correct
+   * number of cities, and is in correct order (population descending)
+   */
+  @Test
+  public void testCitiesInCountryLargestPopulationToSmallest() throws Exception {
+    System.out.println("Testing:testCitiesInCountryLargestPopulationToSmallest");
+
+    String exampleCountry = "France";
+
+    // This matches rows found in sql
+    int expectedLen = 40;
+
+    CityReport result = App.citiesInCountryLargestPopulationToSmallest(exampleCountry);
+    int gotLen = result.cityOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through cityOutput, check if descending
+    for (int i = 0; i < result.cityOutput.size() - 1; i++) {
+      City currentCity = result.cityOutput.get(i);
+      City nextCity = result.cityOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCity.Population >= nextCity.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
+
+  /**
+   * Test if App.citiesInDistrictLargestPopulationToSmallest() returns correct
+   * number of cities, and is in correct order (population descending)
+   */
+  @Test
+  public void testCitiesInDistrictLargestPopulationToSmallest() throws Exception {
+    System.out.println("Testing:testCitiesInDistrictLargestPopulationToSmallest");
+
+    String exampleDistrict = "Zhejiang";
+
+    // This matches rows found in sql
+    int expectedLen = 16;
+
+    CityReport result = App.citiesInDistrictLargestPopulationToSmallest(exampleDistrict);
     int gotLen = result.cityOutput.size();
 
     assertEquals(expectedLen, gotLen);
