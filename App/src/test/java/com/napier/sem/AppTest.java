@@ -358,4 +358,69 @@ public class AppTest {
       }
     }
   }
+
+  /**
+   * Test if App.topNPopulatedCitiesInWorld() returns correct
+   * number of cities, and is in correct order (population descending)
+   */
+  @Test
+  public void testTopNPopulatedCitiesInWorld() throws Exception {
+    System.out.println("Testing:testTopNPopulatedCitiesInWorld");
+
+    int n = 5;
+
+    // Expecting to get n cities
+    int expectedLen = n;
+
+    CityReport result = App.topNPopulatedCitiesInWorld(n);
+    int gotLen = result.cityOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through cityOutput, check if descending
+    for (int i = 0; i < result.cityOutput.size() - 1; i++) {
+      City currentCity = result.cityOutput.get(i);
+      City nextCity = result.cityOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCity.Population >= nextCity.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
+
+  /**
+   * Test if App.topNPopulatedCitiesInNContinent() returns correct
+   * number of cities, and is in correct order (population descending)
+   */
+  @Test
+  public void testTopNPopulatedCitiesInNContinent() throws Exception {
+    System.out.println("Testing:testTopNPopulatedCitiesInNContinent");
+
+    int n = 5;
+    String exampleContinent = "Africa";
+
+    // Expecting to get n cities
+    int expectedLen = n;
+
+    CityReport result = App.topNPopulatedCitiesInNContinent(n, exampleContinent);
+    int gotLen = result.cityOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through cityOutput, check if descending
+    for (int i = 0; i < result.cityOutput.size() - 1; i++) {
+      City currentCity = result.cityOutput.get(i);
+      City nextCity = result.cityOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCity.Population >= nextCity.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
 }
