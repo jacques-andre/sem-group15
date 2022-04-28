@@ -44,7 +44,7 @@ public class Report {
    * @param allReports ArrayList of type Report, will be used in output report.
    */
   public static void toHMTL(ArrayList<Report> allReports, ArrayList<CountryReport> countryReports,
-      ArrayList<CityReport> cityReports) {
+      ArrayList<CityReport> cityReports, ArrayList<PopulationReport> populationReports) {
     TemplateEngine templateEngine = new TemplateEngine();
     ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
     Context ct = new Context();
@@ -55,7 +55,7 @@ public class Report {
     templateEngine.setTemplateResolver(resolver);
 
     // Get build time
-    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     Date date = new Date();
     String dateStr = dateFormat.format(date);
 
@@ -63,6 +63,7 @@ public class Report {
     ct.setVariable("reports", allReports);
     ct.setVariable("countryReports", countryReports);
     ct.setVariable("cityReports", cityReports);
+    ct.setVariable("populationReports", populationReports);
     ct.setVariable("time", dateStr);
 
     try {

@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.napier.sem.Reports.CityReport;
 import com.napier.sem.Reports.CountryReport;
+import com.napier.sem.Reports.PopulationReport;
 import com.napier.sem.Reports.Report;
 
 public class App {
@@ -14,6 +15,7 @@ public class App {
     ArrayList<Report> allReports = new ArrayList<Report>();
     ArrayList<CountryReport> countryReports = new ArrayList<CountryReport>();
     ArrayList<CityReport> cityReports = new ArrayList<CityReport>();
+    ArrayList<PopulationReport> populationReports = new ArrayList<PopulationReport>();
 
     countryReports.add(countryLargestPopulationToSmallest());
     countryReports.add(countryContinentOrgnaisedLargestSmallest("Africa"));
@@ -39,16 +41,26 @@ public class App {
     cityReports.add(capitalCitiesInRegionLargestPopulationToSmallest("Caribbean"));
 
     cityReports.add(topNPopulatedCapitalCities(5));
+    cityReports.add(topNPopulatedCapitalCitiesInContinent(5, "Africa"));
+    cityReports.add(topNPopulatedCitiesInNRegion(5, "Caribbean"));
+    
+    populationReports.add(populationOfWorld());
+    populationReports.add(populationOfContinent("Africa"));
+    populationReports.add(populationOfRegion("Western Europe"));
+    populationReports.add(populationOfCountry("Egypt"));
+    populationReports.add(populatonOfDistrict("Buenos Aires"));
+    populationReports.add(populationOfCity("Oxford"));
 
     allReports.addAll(countryReports);
     allReports.addAll(cityReports);
+    allReports.addAll(populationReports);
 
     for (Report r : allReports) {
       r.outputReport();
       System.out.println("----");
     }
 
-    Report.toHMTL(allReports, countryReports, cityReports);
+    Report.toHMTL(allReports, countryReports, cityReports, populationReports);
   }
 
   /*
@@ -671,41 +683,182 @@ public class App {
 
     return report;
   }
-
   /*
-   * // * "The population of people, people living in cities, and people not
-   * living
-   * // in cities in each country"
-   * //
+   * "The top N populated capital cities in a continent where N is provided by the user."
    */
-  // public static Report populationInCitiesAndNot() {
-  // List<Country> allCountries = Country.getAllCountries();
-  // ArrayList<String> output = new ArrayList<String>();
+  public static CityReport topNPopulatedCapitalCitiesInContinent(int n, String continent) {
+    ArrayList<Country> countriesInContinent = Country.getCountriesByContinent(continent);
+    ArrayList<City> capitalCities = new ArrayList<City>();
 
-  // for (Country currentCountry : allCountries) {
-  // int countryPopulation = currentCountry.Population;
-  // int cityPopulation = 0;
+    ArrayList<String> outputStr = new ArrayList<String>();
+    ArrayList<City> outputCities = new ArrayList<City>();
 
-  // // gets population of all cities in current country
-  // List<City> citiesInCode = City.getCitiesByCountryCode(currentCountry.Code);
-  // for (City city : citiesInCode) {
-  // cityPopulation += city.Population;
-  // }
+    // Go through all countries in continent, append capitals to capitalCities
+    for (Country c : countriesInContinent) {
+      capitalCities.add(c.Capital);
+    }
 
-  // int outsideCity = countryPopulation - cityPopulation;
-  // double cityPercentage = (double) cityPopulation / countryPopulation;
-  // double outsideCityPercentage = (double) outsideCity / countryPopulation;
-  // cityPercentage *= 100;
-  // outsideCityPercentage *= 100;
+    // sort capitalCities by population
+    Collections.sort(capitalCities, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
 
-  // String outputString = String.format(
-  // "Country:%s,Country-Population:%d,City-Population:%d,City-Percentage:%f%%,Outside-city:%d,outsideCityPercentage:%f%%",
-  // currentCountry.Name, countryPopulation, cityPopulation, cityPercentage,
-  // outsideCity, outsideCityPercentage);
+    // Go through capitalCities (sorted) append to output
+    for (int i = 0; i < n; i++) {
+      City currentCity = capitalCities.get(i);
+      outputStr.add(currentCity.toString());
+      outputCities.add(currentCity);
+    }
 
-  // output.add(outputString);
-  // }
-  // Report report = new Report("populationInCitiesAndNot", output);
-  // return report;
-  // }
+    String comment = String.format("Using %d as N, Using %s as continent", n, continent);
+
+    CityReport report = new CityReport(
+        "The top N populated capital cities in a continent where N is provided by the user.",
+        outputStr, comment, outputCities);
+
+    return report;
+  }
+  /*
+   * "The top N populated capital cities in a region where N is provided by the user."
+   */
+  public static CityReport topNPopulatedCapitalCitiesInRegion(int n, String region) {
+    ArrayList<Country> countriesInRegion = Country.getCountriesByRegion(region);
+    ArrayList<City> capitalCities = new ArrayList<City>();
+
+    ArrayList<String> outputStr = new ArrayList<String>();
+    ArrayList<City> outputCities = new ArrayList<City>();
+
+    // Go through all countries in region, append capitals to capitalCities
+    for (Country c : countriesInRegion) {
+      capitalCities.add(c.Capital);
+    }
+
+    // sort capitalCities by population
+    Collections.sort(capitalCities, new Comparator<City>() {
+      public int compare(City c1, City c2) {
+        return c2.Population - c1.Population;
+      }
+    });
+
+    // Go through capitalCities (sorted) append to output
+    for (int i = 0; i < n; i++) {
+      City currentCity = capitalCities.get(i);
+      outputStr.add(currentCity.toString());
+      outputCities.add(currentCity);
+    }
+
+    String comment = String.format("Using %d as N, Using %s as region", n, region);
+
+    CityReport report = new CityReport(
+        "The top N populated capital cities in a region where N is provided by the user.",
+        outputStr, comment, outputCities);
+
+    return report;
+  }
+  /*
+   * "The population of the world."
+   */
+  public static PopulationReport populationOfWorld(){
+    ArrayList<Country> allCountries = Country.getAllCountries();
+    int worldPopulation = 0;
+
+    for(Country c : allCountries){
+      worldPopulation += c.Population;
+    }
+
+    PopulationReport report = new PopulationReport("The population of the world", new ArrayList<String>(), "", worldPopulation);
+
+    return report;
+  }
+  /*
+   * "The population of a continent."
+   */
+  public static PopulationReport populationOfContinent(String continent){
+    ArrayList<Country> countriesInContinent = Country.getCountriesByContinent(continent);
+    int continentPopulation = 0;
+
+    for(Country c : countriesInContinent){
+      continentPopulation += c.Population;
+    }
+
+    String comment = String.format("Using %s as continent", continent);
+
+    PopulationReport report = new PopulationReport("The population of a continent", new ArrayList<String>(), comment, continentPopulation);
+
+    return report;
+  }
+  /*
+   * "The population of a region."
+   */
+  public static PopulationReport populationOfRegion(String region){
+    ArrayList<Country> countriesInRegion = Country.getCountriesByRegion(region);
+    int regionPopulation = 0;
+
+    for(Country c : countriesInRegion){
+      regionPopulation += c.Population;
+    }
+
+    String comment = String.format("Using %s as region", region);
+
+    PopulationReport report = new PopulationReport("The population of a region", new ArrayList<String>(), comment, regionPopulation);
+
+    return report;
+  }
+  /*
+   * "The population of a country"
+   */
+  public static PopulationReport populationOfCountry(String country){
+    ArrayList<Country> allCountries = Country.getAllCountries();
+    int countryPopulation = 0;
+
+    for(Country c : allCountries){
+      if(c.Name.equals(country)){
+        countryPopulation += c.Population;
+      }
+    }
+
+    String comment = String.format("Using %s as country", country);
+
+    PopulationReport report = new PopulationReport("The population of a country", new ArrayList<String>(), comment, countryPopulation);
+
+    return report;
+  }
+  /*
+   * "The population of a district"
+   */
+  public static PopulationReport populatonOfDistrict(String district){
+    ArrayList<City> citiesInDistrict = City.getCitiesByDistrict(district);
+    int districtPopulation = 0;
+
+    for(City c : citiesInDistrict){
+        districtPopulation += c.Population;
+    }
+
+    String comment = String.format("Using %s as district", district);
+
+    PopulationReport report = new PopulationReport("The population of a district", new ArrayList<String>(), comment, districtPopulation);
+
+    return report;
+  }
+  /*
+   * "The population of a city"
+   */
+  public static PopulationReport populationOfCity(String city){
+    ArrayList<City> allCities = City.getCities();
+    int cityPopulation = 0;
+
+    for(City c: allCities){
+      if(c.Name.equals(city)){
+        cityPopulation += c.Population;
+      }
+    }
+
+    String comment = String.format("Using %s as city", city);
+
+    PopulationReport report = new PopulationReport("The population of a city", new ArrayList<String>(), comment, cityPopulation);
+
+    return report;
+  }
 }
