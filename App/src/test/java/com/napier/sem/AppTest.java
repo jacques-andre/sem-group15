@@ -659,7 +659,7 @@ public class AppTest {
     int n = 5;
     int expectedLen = n;
 
-    CityReport result = App.topNPopulatedCitiesInNContinent(n, "Africa");
+    CityReport result = App.topNPopulatedCapitalCitiesInContinent(n, "Africa");
     int gotLen = result.cityOutput.size();
 
     assertEquals(expectedLen, gotLen);
