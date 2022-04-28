@@ -522,4 +522,189 @@ public class AppTest {
       }
     }
   }
+
+  /**
+   * Test if App.capitalCitiesLargestPopulationToSmallest() returns correct
+   * number of cities, and is in correct order (population descending)
+   */
+  @Test
+  public void testCapitalCitiesLargestPopulationToSmallest() throws Exception {
+    System.out.println("Testing:testCapitalCitiesLargestPopulationToSmallest");
+
+    // This matches rows found in sql
+    int expectedLen = 239;
+
+    CityReport result = App.capitalCitiesLargestPopulationToSmallest();
+    int gotLen = result.cityOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through cityOutput, check if descending
+    for (int i = 0; i < result.cityOutput.size() - 1; i++) {
+      City currentCity = result.cityOutput.get(i);
+      City nextCity = result.cityOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCity.Population >= nextCity.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
+
+  /**
+   * Test if App.capitalCitiesInContinentLargestPopulationToSmallest() returns
+   * correct
+   * number of cities, and is in correct order (population descending)
+   */
+  @Test
+  public void testCapitalCitiesInContinentLargestPopulationToSmallest() throws Exception {
+    System.out.println("Testing:testCapitalCitiesInContinentLargestPopulationToSmallest");
+
+    // This matches rows found in sql
+    int expectedLen = 58;
+    String exampleContinent = "Africa";
+
+    CityReport result = App.capitalCitiesInContinentLargestPopulationToSmallest(exampleContinent);
+    int gotLen = result.cityOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through cityOutput, check if descending
+    for (int i = 0; i < result.cityOutput.size() - 1; i++) {
+      City currentCity = result.cityOutput.get(i);
+      City nextCity = result.cityOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCity.Population >= nextCity.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
+
+  /**
+   * Test if App.capitalCitiesInRegionLargestPopulationToSmallest() returns
+   * correct
+   * number of cities, and is in correct order (population descending)
+   */
+  @Test
+  public void testCapitalCitiesInRegionLargestPopulationToSmallest() throws Exception {
+    System.out.println("Testing:testCapitalCitiesInRegionLargestPopulationToSmallest");
+
+    // This matches rows found in sql
+    int expectedLen = 5;
+    String exampleRegion = "Melanesia";
+
+    CityReport result = App.capitalCitiesInRegionLargestPopulationToSmallest(exampleRegion);
+    int gotLen = result.cityOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through cityOutput, check if descending
+    for (int i = 0; i < result.cityOutput.size() - 1; i++) {
+      City currentCity = result.cityOutput.get(i);
+      City nextCity = result.cityOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCity.Population >= nextCity.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
+
+  /**
+   * Test if App.topNPopulatedCapitalCities() returns
+   * correct
+   * number of cities, and is in correct order (population descending)
+   */
+  @Test
+  public void testTopNPopulatedCapitalCities() throws Exception {
+    System.out.println("Testing:testTopNPopulatedCapitalCities");
+
+    int n = 5;
+    int expectedLen = n;
+
+    CityReport result = App.topNPopulatedCapitalCities(n);
+    int gotLen = result.cityOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through cityOutput, check if descending
+    for (int i = 0; i < result.cityOutput.size() - 1; i++) {
+      City currentCity = result.cityOutput.get(i);
+      City nextCity = result.cityOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCity.Population >= nextCity.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
+  /**
+   * Test if App.topNPopulatedCapitalCitiesInContinent() returns
+   * correct
+   * number of cities, and is in correct order (population descending)
+   */
+  @Test
+  public void testTopNPopulatedCapitalCitiesInContinent() throws Exception {
+    System.out.println("Testing:topNPopulatedCapitalCitiesInContinent");
+
+    int n = 5;
+    int expectedLen = n;
+
+    CityReport result = App.topNPopulatedCapitalCitiesInContinent(n, "Africa");
+    int gotLen = result.cityOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through cityOutput, check if descending
+    for (int i = 0; i < result.cityOutput.size() - 1; i++) {
+      City currentCity = result.cityOutput.get(i);
+      City nextCity = result.cityOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCity.Population >= nextCity.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
+  /**
+   * Test if App.topNPopulatedCapitalCitiesInRegion() returns
+   * correct
+   * number of cities, and is in correct order (population descending)
+   */
+  @Test
+  public void testTopNPopulatedCapitalCitiesInRegion() throws Exception {
+    System.out.println("Testing:topNPopulatedCapitalCitiesInRegion");
+
+    int n = 5;
+    int expectedLen = n;
+
+    CityReport result = App.topNPopulatedCapitalCitiesInRegion(n, "Caribbean");
+    int gotLen = result.cityOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through cityOutput, check if descending
+    for (int i = 0; i < result.cityOutput.size() - 1; i++) {
+      City currentCity = result.cityOutput.get(i);
+      City nextCity = result.cityOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCity.Population >= nextCity.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
 }
