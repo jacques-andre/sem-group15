@@ -677,4 +677,34 @@ public class AppTest {
       }
     }
   }
+  /**
+   * Test if App.topNPopulatedCapitalCitiesInRegion() returns
+   * correct
+   * number of cities, and is in correct order (population descending)
+   */
+  @Test
+  public void testTopNPopulatedCapitalCitiesInRegion() throws Exception {
+    System.out.println("Testing:topNPopulatedCapitalCitiesInRegion");
+
+    int n = 5;
+    int expectedLen = n;
+
+    CityReport result = App.topNPopulatedCapitalCitiesInRegion(n, "Caribbean");
+    int gotLen = result.cityOutput.size();
+
+    assertEquals(expectedLen, gotLen);
+    System.out.printf("Expected:%d,Got:%d \n", expectedLen, gotLen);
+
+    // Loop through cityOutput, check if descending
+    for (int i = 0; i < result.cityOutput.size() - 1; i++) {
+      City currentCity = result.cityOutput.get(i);
+      City nextCity = result.cityOutput.get(i + 1);
+
+      // check if current iteration (i) population is not greater than i+1,
+      // if so throw err
+      if (!(currentCity.Population >= nextCity.Population)) {
+        throw new Exception("Population is not descending!");
+      }
+    }
+  }
 }
